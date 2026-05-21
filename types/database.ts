@@ -9,6 +9,8 @@ export type Turma = {
 export type Profile = {
   id: string
   email: string
+  nome: string | null
+  celular: string | null
   turma_id: string | null
   turma?: Turma
   criado_em: string
