@@ -126,7 +126,7 @@ export function CreateAulaDialog() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Criar Nova Aula</DialogTitle>
+          <DialogTitle>Criar nova aula</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
 
@@ -135,7 +135,7 @@ export function CreateAulaDialog() {
             <Label htmlFor="titulo">Título</Label>
             <Input
               id="titulo"
-              placeholder="Ex: Yoga para iniciantes"
+              placeholder="Ex: Terça de manhã - 08h às 10h"
               value={form.titulo}
               onChange={e => setForm({ ...form, titulo: e.target.value })}
               required
