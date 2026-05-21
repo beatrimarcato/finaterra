@@ -6,12 +6,25 @@ export default async function AgendaPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  const { data: aulas } = await supabase
-    .from('aulas')
-    .select('*')
-    .gte('data', new Date().toISOString().split('T')[0])
-    .order('data', { ascending: true })
-    .order('horario', { ascending: true })
+  // Busca o turma_id da aluna logada
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('turma_id')
+    .eq('id', user!.id)
+    .single()
+
+  const turmaId = profile?.turma_id
+
+  // Busca aulas da turma da aluna (filtro explícito + RLS como segunda camada)
+  const { data: aulas } = turmaId
+    ? await supabase
+        .from('aulas')
+        .select('*, turma:turmas(id, nome, criado_em)')
+        .eq('turma_id', turmaId)
+        .gte('data', new Date().toISOString().split('T')[0])
+        .order('data', { ascending: true })
+        .order('horario', { ascending: true })
+    : { data: [] }
 
   const { data: agendamentos } = await supabase
     .from('agendamentos')
