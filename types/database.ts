@@ -1,3 +1,19 @@
+export type Recorrencia = 'avulsa' | 'semanal' | 'quinzenal'
+
+export type Turma = {
+  id: string
+  nome: string
+  criado_em: string
+}
+
+export type Profile = {
+  id: string
+  email: string
+  turma_id: string | null
+  turma?: Turma
+  criado_em: string
+}
+
 export type Aula = {
   id: string
   titulo: string
@@ -5,6 +21,9 @@ export type Aula = {
   horario: string
   vagas_total: number
   vagas_disponiveis: number
+  turma_id: string | null
+  turma?: Turma
+  recorrencia: Recorrencia
   criado_em: string
 }
 

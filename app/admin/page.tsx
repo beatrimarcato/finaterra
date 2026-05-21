@@ -7,7 +7,7 @@ export default async function AdminPage() {
   const supabase = await createClient()
   const { data: aulas } = await supabase
     .from('aulas')
-    .select('*')
+    .select('*, turma:turmas(id, nome, criado_em)')
     .order('data', { ascending: true })
     .order('horario', { ascending: true })
 

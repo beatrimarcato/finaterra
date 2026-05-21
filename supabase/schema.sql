@@ -33,20 +33,34 @@ create policy "Aulas visíveis para todos autenticados"
   to authenticated
   using (true);
 
+-- Função auxiliar com permissão elevada para checar admin
+create or replace function public.is_admin()
+returns boolean
+language sql
+security definer
+stable
+as $$
+  select exists (
+    select 1 from auth.users
+    where id = auth.uid()
+    and email = 'administrativo@finaterraceramica.com.br'
+  )
+$$;
+
 create policy "Apenas admin pode criar aulas"
   on public.aulas for insert
   to authenticated
-  with check (auth.jwt() ->> 'email' = 'beatrimarcato@gmail.com');
+  with check (public.is_admin());
 
 create policy "Apenas admin pode atualizar aulas"
   on public.aulas for update
   to authenticated
-  using (auth.jwt() ->> 'email' = 'beatrimarcato@gmail.com');
+  using (public.is_admin());
 
 create policy "Apenas admin pode deletar aulas"
   on public.aulas for delete
   to authenticated
-  using (auth.jwt() ->> 'email' = 'beatrimarcato@gmail.com');
+  using (public.is_admin());
 
 -- Políticas para agendamentos
 create policy "Aluna vê apenas seus agendamentos"

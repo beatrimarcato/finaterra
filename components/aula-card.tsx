@@ -14,6 +14,18 @@ interface AulaCardProps {
   userId?: string
 }
 
+const RECORRENCIA_LABEL: Record<string, string> = {
+  avulsa: 'Avulsa',
+  semanal: 'Semanal',
+  quinzenal: 'Quinzenal',
+}
+
+const RECORRENCIA_COLOR: Record<string, string> = {
+  avulsa: 'bg-blue-100 text-blue-700',
+  semanal: 'bg-purple-100 text-purple-700',
+  quinzenal: 'bg-amber-100 text-amber-700',
+}
+
 export function AulaCard({ aula, isAdmin, isAgendada, userId }: AulaCardProps) {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
@@ -51,6 +63,16 @@ export function AulaCard({ aula, isAdmin, isAgendada, userId }: AulaCardProps) {
               {aula.vagas_disponiveis} vaga{aula.vagas_disponiveis !== 1 ? 's' : ''}
             </Badge>
           )}
+        </div>
+        <div className="flex flex-wrap gap-1.5 pt-1">
+          {aula.turma?.nome && (
+            <span className="text-xs px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 font-medium">
+              {aula.turma.nome}
+            </span>
+          )}
+          <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${RECORRENCIA_COLOR[aula.recorrencia] ?? 'bg-gray-100 text-gray-600'}`}>
+            {RECORRENCIA_LABEL[aula.recorrencia] ?? aula.recorrencia}
+          </span>
         </div>
       </CardHeader>
       <CardContent className="space-y-2">

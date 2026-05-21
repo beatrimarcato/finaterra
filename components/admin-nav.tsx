@@ -5,6 +5,12 @@ import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 
+const LINKS = [
+  { href: '/admin', label: 'Aulas', exact: true },
+  { href: '/admin/turmas', label: 'Turmas', exact: false },
+  { href: '/admin/alunas', label: 'Alunas', exact: false },
+]
+
 export function AdminNav({ userEmail }: { userEmail: string }) {
   const pathname = usePathname()
   const router = useRouter()
@@ -21,9 +27,18 @@ export function AdminNav({ userEmail }: { userEmail: string }) {
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-6">
           <span className="font-bold text-rose-700 text-lg">Finaterra Admin</span>
-          <Link href="/admin" className={`text-sm font-medium ${pathname === '/admin' ? 'text-rose-600' : 'text-gray-600 hover:text-rose-600'}`}>
-            Aulas
-          </Link>
+          {LINKS.map(({ href, label, exact }) => {
+            const active = exact ? pathname === href : pathname.startsWith(href)
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={`text-sm font-medium transition-colors ${active ? 'text-rose-600' : 'text-gray-600 hover:text-rose-600'}`}
+              >
+                {label}
+              </Link>
+            )
+          })}
         </div>
         <div className="flex items-center gap-3">
           <span className="text-sm text-muted-foreground hidden sm:block">{userEmail}</span>
