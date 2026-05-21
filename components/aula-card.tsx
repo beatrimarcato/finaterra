@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { Aula } from '@/types/database'
+import { AulaActions } from '@/components/aula-actions'
 
 interface AulaCardProps {
   aula: Aula
@@ -81,7 +82,11 @@ export function AulaCard({ aula, isAdmin, isAgendada, userId }: AulaCardProps) {
           <p>🕐 {aula.horario}</p>
           <p>👥 {aula.vagas_disponiveis}/{aula.vagas_total} vagas</p>
         </div>
-        {!isAdmin && (
+        {isAdmin ? (
+          <div className="pt-2 flex justify-end">
+            <AulaActions aula={aula} />
+          </div>
+        ) : (
           <div className="pt-2">
             {isAgendada ? (
               <Button variant="outline" size="sm" className="w-full" disabled>

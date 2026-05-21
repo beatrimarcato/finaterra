@@ -52,13 +52,14 @@ function fmtDate(d: Date) {
 export default async function AdminPage({
   searchParams,
 }: {
-  searchParams: { periodo?: string; view?: string; de?: string; ate?: string }
+  searchParams: Promise<{ periodo?: string; view?: string; de?: string; ate?: string }>
 }) {
   const supabase = await createClient()
+  const params = await searchParams
 
-  const periodo = searchParams.periodo ?? 'semana_atual'
-  const view    = searchParams.view    ?? 'lista'
-  const { inicio, fim } = getDateRange(periodo, searchParams.de, searchParams.ate)
+  const periodo = params.periodo ?? 'semana_atual'
+  const view    = params.view    ?? 'lista'
+  const { inicio, fim } = getDateRange(periodo, params.de, params.ate)
 
   const { data: aulas } = await supabase
     .from('aulas')
