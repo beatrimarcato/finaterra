@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { Turma } from '@/types/database'
 import { CreateTurmaForm } from '@/components/create-turma-form'
+import { TurmaActions } from '@/components/turma-actions'
 
 export default async function TurmasPage() {
   const supabase = await createClient()
@@ -18,11 +19,14 @@ export default async function TurmasPage() {
       {turmas && turmas.length > 0 ? (
         <div className="divide-y border rounded-lg bg-white">
           {turmas.map((turma: Turma) => (
-            <div key={turma.id} className="flex items-center justify-between px-4 py-3">
-              <span className="font-medium text-gray-800">{turma.nome}</span>
-              <span className="text-xs text-muted-foreground">
-                {new Date(turma.criado_em).toLocaleDateString('pt-BR')}
-              </span>
+            <div key={turma.id} className="flex items-center justify-between px-4 py-3 gap-4">
+              <div>
+                <span className="font-medium text-gray-800">{turma.nome}</span>
+                <span className="text-xs text-muted-foreground ml-3">
+                  {new Date(turma.criado_em).toLocaleDateString('pt-BR')}
+                </span>
+              </div>
+              <TurmaActions turmaId={turma.id} turmaAtual={turma.nome} />
             </div>
           ))}
         </div>
