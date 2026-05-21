@@ -8,8 +8,13 @@ export async function GET(request: Request) {
 
   if (code) {
     const supabase = await createClient()
-    const { error } = await supabase.auth.exchangeCodeForSession(code)
-    if (!error) {
+    const { error, data } = await supabase.auth.exchangeCodeForSession(code)
+    if (!error && data.user) {
+      // Garante que o profile existe — cria na primeira vez, ignora nas seguintes
+      await supabase.from('profiles').upsert(
+        { id: data.user.id, email: data.user.email! },
+        { onConflict: 'id', ignoreDuplicates: true }
+      )
       return NextResponse.redirect(`${origin}${next}`)
     }
   }
