@@ -110,10 +110,8 @@ export function GerarAulasMesDialog({ turma }: GerarAulasMesDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <button className="text-xs text-rose-600 hover:text-rose-800 font-medium transition-colors px-2 py-1 rounded hover:bg-rose-50">
-          Gerar aulas do mês
-        </button>
+      <DialogTrigger className="text-xs text-rose-600 hover:text-rose-800 font-medium transition-colors px-2 py-1 rounded hover:bg-rose-50">
+        Gerar aulas do mês
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
