@@ -4,13 +4,21 @@ import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle,
 } from '@/components/ui/dialog'
+import { SemanasDoMes } from '@/types/database'
+
+const SEMANAS_LABELS: Record<SemanasDoMes, string> = {
+  '1_3': '1º e 3º sábados',
+  '2_4': '2º e 4º sábados',
+}
 
 interface TurmaActionsProps {
   turmaId: string
   turmaAtual: string
+  semanasAtual: SemanasDoMes | null
 }
 
 type EstadoModal = 'fechado' | 'editando' | 'confirmar-exclusao' | 'forcando-exclusao'
@@ -20,9 +28,10 @@ interface VinculosInfo {
   aulas: number
 }
 
-export function TurmaActions({ turmaId, turmaAtual }: TurmaActionsProps) {
+export function TurmaActions({ turmaId, turmaAtual, semanasAtual }: TurmaActionsProps) {
   const [estado, setEstado] = useState<EstadoModal>('fechado')
   const [novoNome, setNovoNome] = useState(turmaAtual)
+  const [novasSemanas, setNovasSemanas] = useState<SemanasDoMes | ''>(semanasAtual ?? '')
   const [vinculos, setVinculos] = useState<VinculosInfo | null>(null)
   const [loading, setLoading] = useState(false)
   const [erro, setErro] = useState('')
@@ -31,19 +40,19 @@ export function TurmaActions({ turmaId, turmaAtual }: TurmaActionsProps) {
   // --- Edição ---
   const abrirEdicao = () => {
     setNovoNome(turmaAtual)
+    setNovasSemanas(semanasAtual ?? '')
     setErro('')
     setEstado('editando')
   }
 
   const salvarEdicao = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (novoNome.trim() === turmaAtual) { setEstado('fechado'); return }
     setLoading(true)
     setErro('')
     const supabase = createClient()
     const { error } = await supabase
       .from('turmas')
-      .update({ nome: novoNome.trim() })
+      .update({ nome: novoNome.trim(), semanas_do_mes: novasSemanas || null })
       .eq('id', turmaId)
     if (error) {
       setErro(error.code === '23505' ? 'Já existe uma turma com esse nome.' : error.message)
@@ -121,13 +130,29 @@ export function TurmaActions({ turmaId, turmaAtual }: TurmaActionsProps) {
             <DialogTitle>Editar turma</DialogTitle>
           </DialogHeader>
           <form onSubmit={salvarEdicao} className="space-y-4">
-            <Input
-              value={novoNome}
-              onChange={e => setNovoNome(e.target.value)}
-              placeholder="Nome da turma"
-              required
-              autoFocus
-            />
+            <div className="space-y-2">
+              <Label>Nome da turma</Label>
+              <Input
+                value={novoNome}
+                onChange={e => setNovoNome(e.target.value)}
+                placeholder="Nome da turma"
+                required
+                autoFocus
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Sábados quinzenais</Label>
+              <select
+                value={novasSemanas}
+                onChange={e => setNovasSemanas(e.target.value as SemanasDoMes | '')}
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-600"
+              >
+                <option value="">Nenhuma regra</option>
+                {(Object.entries(SEMANAS_LABELS) as [SemanasDoMes, string][]).map(([value, label]) => (
+                  <option key={value} value={value}>{label}</option>
+                ))}
+              </select>
+            </div>
             {erro && <p className="text-sm text-red-500">{erro}</p>}
             <div className="flex justify-end gap-2">
               <Button type="button" variant="outline" onClick={() => setEstado('fechado')}>Cancelar</Button>

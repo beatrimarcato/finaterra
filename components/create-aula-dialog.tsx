@@ -8,28 +8,56 @@ import { Label } from '@/components/ui/label'
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger,
 } from '@/components/ui/dialog'
-import { Turma, Recorrencia } from '@/types/database'
+import { Turma, Recorrencia, SemanasDoMes } from '@/types/database'
 
 const DIAS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
+
+const SEMANAS_LABELS: Record<SemanasDoMes, string> = {
+  '1_3': '1ª e 3ª semanas do mês',
+  '2_4': '2ª e 4ª semanas do mês',
+}
+
+/** Retorna qual semana do mês uma data representa (1–5). */
+function semanaNoMes(date: Date): number {
+  return Math.ceil(date.getDate() / 7)
+}
 
 function gerarDatas(
   tipo: Recorrencia,
   dataAvulsa: string,
   dataInicio: string,
   dataFim: string,
-  diasSemana: number[]
+  diasSemana: number[],
+  semanas?: SemanasDoMes | null
 ): string[] {
   if (tipo === 'avulsa') return dataAvulsa ? [dataAvulsa] : []
 
   const datas: string[] = []
   const fim = new Date(dataFim + 'T12:00:00')
-  const intervalo = tipo === 'quinzenal' ? 14 : 7
 
+  // Para turmas quinzenais com regra de semanas: filtrar por Nª ocorrência do dia no mês
+  if (tipo === 'quinzenal' && semanas) {
+    for (const dia of diasSemana) {
+      const cursor = new Date(dataInicio + 'T12:00:00')
+      // Avançar até o primeiro dia da semana escolhido
+      while (cursor.getDay() !== dia) cursor.setDate(cursor.getDate() + 1)
+      while (cursor <= fim) {
+        const semana = semanaNoMes(cursor)
+        const valido = semanas === '1_3'
+          ? (semana === 1 || semana === 3)
+          : (semana === 2 || semana === 4)
+        if (valido) datas.push(cursor.toISOString().split('T')[0])
+        cursor.setDate(cursor.getDate() + 7) // próxima ocorrência do mesmo dia
+      }
+    }
+    return datas.sort()
+  }
+
+  // Lógica padrão: semanal = a cada 7 dias, quinzenal = a cada 14 dias
+  const intervalo = tipo === 'quinzenal' ? 14 : 7
   for (const dia of diasSemana) {
     const cursor = new Date(dataInicio + 'T12:00:00')
-    while (cursor.getDay() !== dia) {
-      cursor.setDate(cursor.getDate() + 1)
-    }
+    while (cursor.getDay() !== dia) cursor.setDate(cursor.getDate() + 1)
     while (cursor <= fim) {
       datas.push(cursor.toISOString().split('T')[0])
       cursor.setDate(cursor.getDate() + intervalo)
@@ -64,6 +92,10 @@ export function CreateAulaDialog() {
     })
   }, [open])
 
+  const turmaSelecionada = turmas.find(t => t.id === form.turma_id) ?? null
+  const semanas = turmaSelecionada?.semanas_do_mes ?? null
+  const isQuinzenalComRegra = tipo === 'quinzenal' && !!semanas
+
   const toggleDia = (dia: number) => {
     setDiasSemana(prev =>
       prev.includes(dia) ? prev.filter(d => d !== dia) : [...prev, dia]
@@ -71,7 +103,7 @@ export function CreateAulaDialog() {
   }
 
   const previewDatas = tipo !== 'avulsa' && form.dataInicio && form.dataFim && diasSemana.length > 0
-    ? gerarDatas(tipo, '', form.dataInicio, form.dataFim, diasSemana)
+    ? gerarDatas(tipo, '', form.dataInicio, form.dataFim, diasSemana, semanas)
     : []
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -86,7 +118,7 @@ export function CreateAulaDialog() {
       return
     }
 
-    const datas = gerarDatas(tipo, form.data, form.dataInicio, form.dataFim, diasSemana)
+    const datas = gerarDatas(tipo, form.data, form.dataInicio, form.dataFim, diasSemana, semanas)
 
     if (datas.length === 0) {
       alert('Nenhuma data gerada com os parâmetros informados.')
@@ -135,7 +167,7 @@ export function CreateAulaDialog() {
             <Label htmlFor="titulo">Título</Label>
             <Input
               id="titulo"
-              placeholder="Ex: Terça de manhã - 08h às 10h"
+              placeholder="Ex: Aula de cerâmica"
               value={form.titulo}
               onChange={e => setForm({ ...form, titulo: e.target.value })}
               required
@@ -181,6 +213,12 @@ export function CreateAulaDialog() {
                 </button>
               ))}
             </div>
+            {/* Badge informativo para turmas quinzenais com regra */}
+            {isQuinzenalComRegra && (
+              <p className="text-xs text-rose-600 bg-rose-50 border border-rose-200 rounded px-2 py-1">
+                Esta turma segue a regra: <strong>{SEMANAS_LABELS[semanas!]}</strong>
+              </p>
+            )}
           </div>
 
           {/* Dias da semana */}
