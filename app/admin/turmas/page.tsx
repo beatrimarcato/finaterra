@@ -5,8 +5,8 @@ import { TurmaActions } from '@/components/turma-actions'
 import { GerarAulasMesDialog } from '@/components/gerar-aulas-mes-dialog'
 
 const SEMANAS_LABELS: Record<SemanasDoMes, string> = {
-  '1_3': '1º e 3º sábados',
-  '2_4': '2º e 4º sábados',
+  '1_3': 'Ímpares',
+  '2_4': 'Pares',
 }
 
 export default async function TurmasPage() {

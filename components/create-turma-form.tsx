@@ -8,8 +8,8 @@ import { Label } from '@/components/ui/label'
 import { SemanasDoMes } from '@/types/database'
 
 const SEMANAS_LABELS: Record<SemanasDoMes, string> = {
-  '1_3': '1º e 3º sábados',
-  '2_4': '2º e 4º sábados',
+  '1_3': 'Ímpares',
+  '2_4': 'Pares',
 }
 
 export function CreateTurmaForm() {
@@ -52,7 +52,7 @@ export function CreateTurmaForm() {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="semanas-turma">Sábados quinzenais</Label>
+          <Label htmlFor="semanas-turma">Quinzenas</Label>
           <select
             id="semanas-turma"
             value={semanas}

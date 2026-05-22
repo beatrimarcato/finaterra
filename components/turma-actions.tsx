@@ -11,8 +11,8 @@ import {
 import { SemanasDoMes } from '@/types/database'
 
 const SEMANAS_LABELS: Record<SemanasDoMes, string> = {
-  '1_3': '1º e 3º sábados',
-  '2_4': '2º e 4º sábados',
+  '1_3': 'Ímpares',
+  '2_4': 'Pares',
 }
 
 interface TurmaActionsProps {
@@ -141,7 +141,7 @@ export function TurmaActions({ turmaId, turmaAtual, semanasAtual }: TurmaActions
               />
             </div>
             <div className="space-y-2">
-              <Label>Sábados quinzenais</Label>
+              <Label>Quinzenas</Label>
               <select
                 value={novasSemanas}
                 onChange={e => setNovasSemanas(e.target.value as SemanasDoMes | '')}
