@@ -27,6 +27,9 @@ export function AdminNav({ userEmail }: { userEmail: string }) {
         </div>
         <div className="flex items-center gap-3">
           <span className="text-sm text-muted-foreground hidden sm:block">{userEmail}</span>
+          <Link href="/agenda">
+            <Button variant="outline" size="sm">Ver agenda</Button>
+          </Link>
           <Button variant="outline" size="sm" onClick={handleLogout}>Sair</Button>
         </div>
       </div>
