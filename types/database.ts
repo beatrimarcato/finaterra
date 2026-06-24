@@ -1,8 +1,12 @@
 export type Recorrencia = 'avulsa' | 'semanal' | 'quinzenal'
 
+/** @deprecated coluna removida do banco — mantida só para compatibilidade de tipos */
+export type SemanasDoMes = '1_3' | '2_4'
+
 export type Turma = {
   id: string
   nome: string
+  semanas_do_mes?: SemanasDoMes | null
   criado_em: string
 }
 
