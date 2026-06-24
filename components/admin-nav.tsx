@@ -24,6 +24,9 @@ export function AdminNav({ userEmail }: { userEmail: string }) {
           <Link href="/admin" className={`text-sm font-medium ${pathname === '/admin' ? 'text-rose-600' : 'text-gray-600 hover:text-rose-600'}`}>
             Aulas
           </Link>
+          <Link href="/admin/alunas" className={`text-sm font-medium ${pathname === '/admin/alunas' ? 'text-rose-600' : 'text-gray-600 hover:text-rose-600'}`}>
+            Alunas
+          </Link>
         </div>
         <div className="flex items-center gap-3">
           <span className="text-sm text-muted-foreground hidden sm:block">{userEmail}</span>

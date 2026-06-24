@@ -2,6 +2,8 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { AlunaNav } from '@/components/aluna-nav'
 
+export const dynamic = 'force-dynamic'
+
 const ADMIN_EMAIL = 'beatrimarcato@gmail.com'
 
 export default async function AgendaLayout({ children }: { children: React.ReactNode }) {

@@ -1,3 +1,20 @@
+export type Turma = {
+  id: string
+  nome: string
+  criado_em: string
+}
+
+export type Profile = {
+  id: string
+  email: string
+  nome: string
+  celular: string
+  turma_id: string | null
+  tipo: 'semanal' | 'quinzenal_a' | 'quinzenal_b' | null
+  criado_em: string
+  turma?: Turma
+}
+
 export type Aula = {
   id: string
   titulo: string
@@ -5,6 +22,8 @@ export type Aula = {
   horario: string
   vagas_total: number
   vagas_disponiveis: number
+  turma_id: string | null
+  semana_grupo: 'a' | 'b' | null
   criado_em: string
 }
 
