@@ -44,7 +44,7 @@ export default async function TurmasPage() {
                 <TurmaActions
                   turmaId={turma.id}
                   turmaAtual={turma.nome}
-                  semanasAtual={turma.semanas_do_mes}
+                  semanasAtual={turma.semanas_do_mes ?? null}
                 />
               </div>
             </div>
