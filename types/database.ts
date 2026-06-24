@@ -1,11 +1,8 @@
 export type Recorrencia = 'avulsa' | 'semanal' | 'quinzenal'
 
-export type SemanasDoMes = '1_3' | '2_4'
-
 export type Turma = {
   id: string
   nome: string
-  semanas_do_mes: SemanasDoMes | null
   criado_em: string
 }
 
@@ -15,8 +12,9 @@ export type Profile = {
   nome: string | null
   celular: string | null
   turma_id: string | null
-  turma?: Turma
+  tipo: 'semanal' | 'quinzenal_a' | 'quinzenal_b' | null
   criado_em: string
+  turma?: Turma
 }
 
 export type Aula = {
@@ -28,7 +26,7 @@ export type Aula = {
   vagas_disponiveis: number
   turma_id: string | null
   turma?: Turma
-  recorrencia: Recorrencia
+  semana_grupo: 'a' | 'b' | null
   criado_em: string
 }
 

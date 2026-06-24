@@ -8,19 +8,9 @@ import { Label } from '@/components/ui/label'
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger,
 } from '@/components/ui/dialog'
-import { Turma, Recorrencia, SemanasDoMes } from '@/types/database'
+import { Turma, Recorrencia } from '@/types/database'
 
 const DIAS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
-
-const SEMANAS_LABELS: Record<SemanasDoMes, string> = {
-  '1_3': '1ª e 3ª semanas do mês',
-  '2_4': '2ª e 4ª semanas do mês',
-}
-
-/** Retorna qual semana do mês uma data representa (1–5). */
-function semanaNoMes(date: Date): number {
-  return Math.ceil(date.getDate() / 7)
-}
 
 function gerarDatas(
   tipo: Recorrencia,
@@ -28,33 +18,13 @@ function gerarDatas(
   dataInicio: string,
   dataFim: string,
   diasSemana: number[],
-  semanas?: SemanasDoMes | null
 ): string[] {
   if (tipo === 'avulsa') return dataAvulsa ? [dataAvulsa] : []
 
   const datas: string[] = []
   const fim = new Date(dataFim + 'T12:00:00')
-
-  // Para turmas quinzenais com regra de semanas: filtrar por Nª ocorrência do dia no mês
-  if (tipo === 'quinzenal' && semanas) {
-    for (const dia of diasSemana) {
-      const cursor = new Date(dataInicio + 'T12:00:00')
-      // Avançar até o primeiro dia da semana escolhido
-      while (cursor.getDay() !== dia) cursor.setDate(cursor.getDate() + 1)
-      while (cursor <= fim) {
-        const semana = semanaNoMes(cursor)
-        const valido = semanas === '1_3'
-          ? (semana === 1 || semana === 3)
-          : (semana === 2 || semana === 4)
-        if (valido) datas.push(cursor.toISOString().split('T')[0])
-        cursor.setDate(cursor.getDate() + 7) // próxima ocorrência do mesmo dia
-      }
-    }
-    return datas.sort()
-  }
-
-  // Lógica padrão: semanal = a cada 7 dias, quinzenal = a cada 14 dias
   const intervalo = tipo === 'quinzenal' ? 14 : 7
+
   for (const dia of diasSemana) {
     const cursor = new Date(dataInicio + 'T12:00:00')
     while (cursor.getDay() !== dia) cursor.setDate(cursor.getDate() + 1)
@@ -73,6 +43,7 @@ export function CreateAulaDialog() {
   const [turmas, setTurmas] = useState<Turma[]>([])
   const [tipo, setTipo] = useState<Recorrencia>('avulsa')
   const [diasSemana, setDiasSemana] = useState<number[]>([])
+  const [semanaGrupo, setSemanaGrupo] = useState<'a' | 'b' | ''>('')
   const [form, setForm] = useState({
     titulo: '',
     turma_id: '',
@@ -92,10 +63,6 @@ export function CreateAulaDialog() {
     })
   }, [open])
 
-  const turmaSelecionada = turmas.find(t => t.id === form.turma_id) ?? null
-  const semanas = turmaSelecionada?.semanas_do_mes ?? null
-  const isQuinzenalComRegra = tipo === 'quinzenal' && !!semanas
-
   const toggleDia = (dia: number) => {
     setDiasSemana(prev =>
       prev.includes(dia) ? prev.filter(d => d !== dia) : [...prev, dia]
@@ -103,7 +70,7 @@ export function CreateAulaDialog() {
   }
 
   const previewDatas = tipo !== 'avulsa' && form.dataInicio && form.dataFim && diasSemana.length > 0
-    ? gerarDatas(tipo, '', form.dataInicio, form.dataFim, diasSemana, semanas)
+    ? gerarDatas(tipo, '', form.dataInicio, form.dataFim, diasSemana)
     : []
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -117,8 +84,12 @@ export function CreateAulaDialog() {
       alert('Selecione pelo menos um dia da semana.')
       return
     }
+    if (tipo === 'quinzenal' && !semanaGrupo) {
+      alert('Selecione o grupo (A ou B) para aulas quinzenais.')
+      return
+    }
 
-    const datas = gerarDatas(tipo, form.data, form.dataInicio, form.dataFim, diasSemana, semanas)
+    const datas = gerarDatas(tipo, form.data, form.dataInicio, form.dataFim, diasSemana)
 
     if (datas.length === 0) {
       alert('Nenhuma data gerada com os parâmetros informados.')
@@ -136,7 +107,8 @@ export function CreateAulaDialog() {
       vagas_total: vagasTotal,
       vagas_disponiveis: vagasTotal,
       turma_id: form.turma_id,
-      recorrencia: tipo,
+      // semana_grupo: quinzenal → A ou B; semanal/avulsa → null (semanais veem todas)
+      semana_grupo: tipo === 'quinzenal' ? semanaGrupo : null,
     }))
 
     const { error } = await supabase.from('aulas').insert(rows)
@@ -145,6 +117,7 @@ export function CreateAulaDialog() {
       setOpen(false)
       setTipo('avulsa')
       setDiasSemana([])
+      setSemanaGrupo('')
       setForm({ titulo: '', turma_id: '', data: '', dataInicio: '', dataFim: '', horario: '', vagas_total: '10' })
       router.refresh()
     }
@@ -202,7 +175,7 @@ export function CreateAulaDialog() {
                 <button
                   key={t}
                   type="button"
-                  onClick={() => { setTipo(t); setDiasSemana([]) }}
+                  onClick={() => { setTipo(t); setDiasSemana([]); setSemanaGrupo('') }}
                   className={`flex-1 py-1.5 rounded-md text-sm font-medium border transition-colors capitalize ${
                     tipo === t
                       ? 'bg-rose-600 text-white border-rose-600'
@@ -213,13 +186,31 @@ export function CreateAulaDialog() {
                 </button>
               ))}
             </div>
-            {/* Badge informativo para turmas quinzenais com regra */}
-            {isQuinzenalComRegra && (
-              <p className="text-xs text-rose-600 bg-rose-50 border border-rose-200 rounded px-2 py-1">
-                Esta turma segue a regra: <strong>{SEMANAS_LABELS[semanas!]}</strong>
-              </p>
-            )}
           </div>
+
+          {/* Grupo A/B — só para quinzenal */}
+          {tipo === 'quinzenal' && (
+            <div className="space-y-2">
+              <Label>Grupo</Label>
+              <div className="flex gap-2">
+                {(['a', 'b'] as const).map(g => (
+                  <button
+                    key={g}
+                    type="button"
+                    onClick={() => setSemanaGrupo(semanaGrupo === g ? '' : g)}
+                    className={`flex-1 py-1.5 rounded-md text-sm font-medium border transition-colors ${
+                      semanaGrupo === g
+                        ? 'bg-rose-600 text-white border-rose-600'
+                        : 'bg-white text-gray-700 border-gray-300 hover:border-rose-400'
+                    }`}
+                  >
+                    Grupo {g.toUpperCase()}
+                  </button>
+                ))}
+              </div>
+              <p className="text-xs text-muted-foreground">Semanais veem ambos os grupos. Quinzenais veem apenas o grupo delas.</p>
+            </div>
+          )}
 
           {/* Dias da semana */}
           {tipo !== 'avulsa' && (

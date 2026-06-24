@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { Profile, Turma } from '@/types/database'
 import { TurmaSelector } from '@/components/turma-selector'
+import { EditProfileDialog } from '@/components/edit-profile-dialog'
 
 export default async function AlunasPage() {
   const supabase = await createClient()
@@ -19,6 +20,13 @@ export default async function AlunasPage() {
   const pendentes = (profiles ?? []).filter((p: Profile) => !p.turma_id && p.nome)
   const aprovadas = (profiles ?? []).filter((p: Profile) => !!p.turma_id)
   const semCadastro = (profiles ?? []).filter((p: Profile) => !p.nome)
+
+  const tipoLabel = (tipo: Profile['tipo']) => {
+    if (tipo === 'semanal') return 'Semanal'
+    if (tipo === 'quinzenal_a') return 'Quinzenal A'
+    if (tipo === 'quinzenal_b') return 'Quinzenal B'
+    return null
+  }
 
   return (
     <div className="space-y-8">
@@ -44,12 +52,8 @@ export default async function AlunasPage() {
                   )}
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
-                  <span className="text-xs text-amber-600 font-medium hidden sm:block">Atribuir turma:</span>
-                  <TurmaSelector
-                    profileId={profile.id}
-                    turmaAtualId={profile.turma_id}
-                    turmas={turmas ?? []}
-                  />
+                  <span className="text-xs text-amber-600 font-medium hidden sm:block">Atribuir:</span>
+                  <EditProfileDialog profile={profile} turmas={turmas as Turma[]} />
                 </div>
               </div>
             ))}
@@ -75,13 +79,12 @@ export default async function AlunasPage() {
                   {profile.celular && (
                     <p className="text-xs text-muted-foreground">{profile.celular}</p>
                   )}
-                  <p className="text-xs text-rose-600 mt-0.5">{profile.turma?.nome}</p>
+                  <p className="text-xs text-rose-600 mt-0.5">
+                    {profile.turma?.nome}
+                    {profile.tipo && <span className="text-gray-400"> · {tipoLabel(profile.tipo)}</span>}
+                  </p>
                 </div>
-                <TurmaSelector
-                  profileId={profile.id}
-                  turmaAtualId={profile.turma_id}
-                  turmas={turmas ?? []}
-                />
+                <EditProfileDialog profile={profile} turmas={turmas as Turma[]} />
               </div>
             ))}
           </div>
@@ -92,7 +95,7 @@ export default async function AlunasPage() {
         )}
       </section>
 
-      {/* Sem cadastro (só fizeram login, ainda não preencheram nome) */}
+      {/* Sem cadastro */}
       {semCadastro.length > 0 && (
         <section className="space-y-3">
           <div className="flex items-center gap-2">
