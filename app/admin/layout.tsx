@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { AdminNav } from '@/components/admin-nav'
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'administrativo@finaterraceramica.com.br'
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'beatrimarcato@gmail.com'
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient()
