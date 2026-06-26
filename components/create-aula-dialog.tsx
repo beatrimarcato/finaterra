@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label'
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger,
 } from '@/components/ui/dialog'
+<<<<<<< HEAD
 import { Turma, Recorrencia } from '@/types/database'
 
 const DIAS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
@@ -36,11 +37,15 @@ function gerarDatas(
 
   return datas.sort()
 }
+=======
+import { Turma } from '@/types/database'
+>>>>>>> 69df8e35185937196dbd5775c87abd9c59859411
 
 export function CreateAulaDialog() {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [turmas, setTurmas] = useState<Turma[]>([])
+<<<<<<< HEAD
   const [tipo, setTipo] = useState<Recorrencia>('avulsa')
   const [diasSemana, setDiasSemana] = useState<number[]>([])
   const [semanaGrupo, setSemanaGrupo] = useState<'a' | 'b' | ''>('')
@@ -50,6 +55,12 @@ export function CreateAulaDialog() {
     data: '',
     dataInicio: '',
     dataFim: '',
+=======
+  const [form, setForm] = useState({
+    turma_id: '',
+    semana_grupo: '' as 'a' | 'b' | '',
+    data: '',
+>>>>>>> 69df8e35185937196dbd5775c87abd9c59859411
     horario: '',
     vagas_total: '10',
   })
@@ -63,6 +74,7 @@ export function CreateAulaDialog() {
     })
   }, [open])
 
+<<<<<<< HEAD
   const toggleDia = (dia: number) => {
     setDiasSemana(prev =>
       prev.includes(dia) ? prev.filter(d => d !== dia) : [...prev, dia]
@@ -73,6 +85,8 @@ export function CreateAulaDialog() {
     ? gerarDatas(tipo, '', form.dataInicio, form.dataFim, diasSemana)
     : []
 
+=======
+>>>>>>> 69df8e35185937196dbd5775c87abd9c59859411
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -98,8 +112,13 @@ export function CreateAulaDialog() {
 
     setLoading(true)
     const supabase = createClient()
+
+    const turma = turmas.find(t => t.id === form.turma_id)
+    const grupoLabel = form.semana_grupo === 'a' ? ' · Grupo A' : form.semana_grupo === 'b' ? ' · Grupo B' : ''
+    const titulo = `${turma?.nome ?? 'Aula'}${grupoLabel}`
     const vagasTotal = parseInt(form.vagas_total)
 
+<<<<<<< HEAD
     const rows = datas.map(data => ({
       titulo: form.titulo,
       data,
@@ -119,6 +138,21 @@ export function CreateAulaDialog() {
       setDiasSemana([])
       setSemanaGrupo('')
       setForm({ titulo: '', turma_id: '', data: '', dataInicio: '', dataFim: '', horario: '', vagas_total: '10' })
+=======
+    const { error } = await supabase.from('aulas').insert({
+      titulo,
+      turma_id: form.turma_id,
+      semana_grupo: form.semana_grupo || null,
+      data: form.data,
+      horario: form.horario,
+      vagas_total: vagasTotal,
+      vagas_disponiveis: vagasTotal,
+    })
+
+    if (!error) {
+      setOpen(false)
+      setForm({ turma_id: '', semana_grupo: '', data: '', horario: '', vagas_total: '10' })
+>>>>>>> 69df8e35185937196dbd5775c87abd9c59859411
       router.refresh()
     }
     setLoading(false)
@@ -137,16 +171,31 @@ export function CreateAulaDialog() {
 
           {/* Título */}
           <div className="space-y-2">
+<<<<<<< HEAD
             <Label htmlFor="titulo">Título</Label>
             <Input
               id="titulo"
               placeholder="Ex: Aula de cerâmica"
               value={form.titulo}
               onChange={e => setForm({ ...form, titulo: e.target.value })}
+=======
+            <Label htmlFor="turma">Turma</Label>
+            <select
+              id="turma"
+              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              value={form.turma_id}
+              onChange={e => setForm({ ...form, turma_id: e.target.value })}
+>>>>>>> 69df8e35185937196dbd5775c87abd9c59859411
               required
-            />
+            >
+              <option value="">Selecionar turma...</option>
+              {turmas.map(t => (
+                <option key={t.id} value={t.id}>{t.nome}</option>
+              ))}
+            </select>
           </div>
 
+<<<<<<< HEAD
           {/* Turma */}
           <div className="space-y-2">
             <Label htmlFor="turma">Turma</Label>
@@ -237,6 +286,30 @@ export function CreateAulaDialog() {
 
           {/* Data(s) */}
           {tipo === 'avulsa' ? (
+=======
+          <div className="space-y-2">
+            <Label>Semana</Label>
+            <div className="flex gap-2">
+              {(['a', 'b'] as const).map(g => (
+                <button
+                  key={g}
+                  type="button"
+                  onClick={() => setForm({ ...form, semana_grupo: form.semana_grupo === g ? '' : g })}
+                  className={`flex-1 rounded-md border py-2 text-sm font-medium transition-colors ${
+                    form.semana_grupo === g
+                      ? 'bg-rose-600 text-white border-rose-600'
+                      : 'bg-background border-input hover:bg-accent'
+                  }`}
+                >
+                  Grupo {g.toUpperCase()}
+                </button>
+              ))}
+            </div>
+            <p className="text-xs text-muted-foreground">Semanais veem ambos os grupos. Quinzenais veem apenas o grupo delas.</p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+>>>>>>> 69df8e35185937196dbd5775c87abd9c59859411
             <div className="space-y-2">
               <Label htmlFor="data">Data</Label>
               <Input
@@ -298,6 +371,7 @@ export function CreateAulaDialog() {
             </div>
           </div>
 
+<<<<<<< HEAD
           {/* Preview */}
           {previewDatas.length > 0 && (
             <p className="text-xs text-muted-foreground bg-rose-50 rounded px-3 py-2">
@@ -306,6 +380,20 @@ export function CreateAulaDialog() {
               {' '}até {new Date(previewDatas[previewDatas.length - 1] + 'T12:00:00').toLocaleDateString('pt-BR')})
             </p>
           )}
+=======
+          <div className="space-y-2">
+            <Label htmlFor="vagas">Vagas</Label>
+            <Input
+              id="vagas"
+              type="number"
+              min="1"
+              max="100"
+              value={form.vagas_total}
+              onChange={e => setForm({ ...form, vagas_total: e.target.value })}
+              required
+            />
+          </div>
+>>>>>>> 69df8e35185937196dbd5775c87abd9c59859411
 
           <div className="flex justify-end gap-2">
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>Cancelar</Button>
