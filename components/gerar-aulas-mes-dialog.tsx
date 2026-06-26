@@ -91,7 +91,7 @@ export function GerarAulasMesDialog({ turma }: GerarAulasMesDialogProps) {
       vagas_total: vagasTotal,
       vagas_disponiveis: vagasTotal,
       turma_id: turma.id,
-      recorrencia: 'quinzenal' as const,
+      semana_grupo: null,
     }))
 
     const { error } = await supabase.from('aulas').insert(rows)

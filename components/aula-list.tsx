@@ -3,16 +3,14 @@ import { AulaActions } from '@/components/aula-actions'
 
 type AulaComAgendamentos = Aula & { agendamentos: { id: string }[] }
 
-const RECORRENCIA_LABEL: Record<string, string> = {
-  avulsa:    'Avulsa',
-  semanal:   'Semanal',
-  quinzenal: 'Quinzenal',
+const GRUPO_LABEL: Record<string, string> = {
+  a: 'Grupo A',
+  b: 'Grupo B',
 }
 
-const RECORRENCIA_COLOR: Record<string, string> = {
-  avulsa:    'bg-blue-100 text-blue-700',
-  semanal:   'bg-purple-100 text-purple-700',
-  quinzenal: 'bg-amber-100 text-amber-700',
+const GRUPO_COLOR: Record<string, string> = {
+  a: 'bg-purple-100 text-purple-700',
+  b: 'bg-amber-100 text-amber-700',
 }
 
 export function AulaList({ aulas }: { aulas: AulaComAgendamentos[] }) {
@@ -61,8 +59,8 @@ export function AulaList({ aulas }: { aulas: AulaComAgendamentos[] }) {
 
               <span className="text-sm text-gray-600 tabular-nums">{aula.horario.slice(0, 5)}</span>
 
-              <span className={`text-xs px-2 py-0.5 rounded-full font-medium w-fit ${RECORRENCIA_COLOR[aula.recorrencia] ?? 'bg-gray-100 text-gray-600'}`}>
-                {RECORRENCIA_LABEL[aula.recorrencia] ?? aula.recorrencia}
+              <span className={`text-xs px-2 py-0.5 rounded-full font-medium w-fit ${aula.semana_grupo ? GRUPO_COLOR[aula.semana_grupo] : 'bg-blue-100 text-blue-700'}`}>
+                {aula.semana_grupo ? (GRUPO_LABEL[aula.semana_grupo] ?? aula.semana_grupo) : 'Semanal'}
               </span>
 
               <div className="md:text-right">

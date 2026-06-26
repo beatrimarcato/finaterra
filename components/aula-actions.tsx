@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { Aula, Turma, Recorrencia } from '@/types/database'
+import { Aula, Turma } from '@/types/database'
 
 type EstadoModal = 'fechado' | 'editando' | 'confirmar-exclusao'
 
@@ -21,8 +21,8 @@ export function AulaActions({ aula }: { aula: Aula }) {
     data:       aula.data,
     horario:    aula.horario.slice(0, 5),
     vagas_total: String(aula.vagas_total),
-    turma_id:   aula.turma_id ?? '',
-    recorrencia: aula.recorrencia as Recorrencia,
+    turma_id:    aula.turma_id ?? '',
+    semana_grupo: aula.semana_grupo ?? '' as 'a' | 'b' | '',
   })
   const router = useRouter()
 
@@ -53,7 +53,7 @@ export function AulaActions({ aula }: { aula: Aula }) {
         vagas_total:        vagasTotal,
         vagas_disponiveis:  vagasDisponiveis,
         turma_id:           form.turma_id || null,
-        recorrencia:        form.recorrencia,
+        semana_grupo:       form.semana_grupo || null,
       })
       .eq('id', aula.id)
 
@@ -144,23 +144,24 @@ export function AulaActions({ aula }: { aula: Aula }) {
             </div>
 
             <div className="space-y-2">
-              <Label>Frequência</Label>
+              <Label>Grupo</Label>
               <div className="flex gap-2">
-                {(['avulsa', 'semanal', 'quinzenal'] as Recorrencia[]).map(r => (
+                {([['', 'Nenhum'], ['a', 'Grupo A'], ['b', 'Grupo B']] as const).map(([val, label]) => (
                   <button
-                    key={r}
+                    key={val}
                     type="button"
-                    onClick={() => setForm({ ...form, recorrencia: r })}
-                    className={`flex-1 py-1.5 rounded-md text-sm font-medium border transition-colors capitalize ${
-                      form.recorrencia === r
+                    onClick={() => setForm({ ...form, semana_grupo: val as 'a' | 'b' | '' })}
+                    className={`flex-1 py-1.5 rounded-md text-sm font-medium border transition-colors ${
+                      form.semana_grupo === val
                         ? 'bg-rose-600 text-white border-rose-600'
                         : 'bg-white text-gray-700 border-gray-300 hover:border-rose-400'
                     }`}
                   >
-                    {r}
+                    {label}
                   </button>
                 ))}
               </div>
+              <p className="text-xs text-muted-foreground">Semanais veem todas. Quinzenais veem apenas seu grupo.</p>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
