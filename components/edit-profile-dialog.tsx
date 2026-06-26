@@ -44,8 +44,8 @@ export function EditProfileDialog({ profile, turmas }: EditProfileDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline" size="sm">Editar</Button>
+      <DialogTrigger render={<Button variant="outline" size="sm" />}>
+        Editar
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
