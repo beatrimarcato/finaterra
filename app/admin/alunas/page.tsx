@@ -1,30 +1,18 @@
 import { createClient } from '@/lib/supabase/server'
 import { Profile, Turma } from '@/types/database'
-<<<<<<< HEAD
-import { TurmaSelector } from '@/components/turma-selector'
 import { EditProfileDialog } from '@/components/edit-profile-dialog'
 
 export default async function AlunasPage() {
-=======
-import { EditProfileDialog } from '@/components/edit-profile-dialog'
-
-export default async function AdminAlunasPage() {
->>>>>>> 69df8e35185937196dbd5775c87abd9c59859411
   const supabase = await createClient()
 
   const [{ data: profiles }, { data: turmas }] = await Promise.all([
     supabase
       .from('profiles')
-<<<<<<< HEAD
       .select('*, turma:turmas(id, nome, criado_em)')
-=======
-      .select('*, turma:turmas(nome)')
->>>>>>> 69df8e35185937196dbd5775c87abd9c59859411
       .order('criado_em', { ascending: false }),
     supabase
       .from('turmas')
       .select('*')
-<<<<<<< HEAD
       .order('nome', { ascending: true }),
   ])
 
@@ -33,12 +21,6 @@ export default async function AdminAlunasPage() {
   const semCadastro = (profiles ?? []).filter((p: Profile) => !p.nome)
 
   const tipoLabel = (tipo: Profile['tipo']) => {
-=======
-      .order('nome'),
-  ])
-
-  const tipoLabel = (tipo: string | null) => {
->>>>>>> 69df8e35185937196dbd5775c87abd9c59859411
     if (tipo === 'semanal') return 'Semanal'
     if (tipo === 'quinzenal_a') return 'Quinzenal A'
     if (tipo === 'quinzenal_b') return 'Quinzenal B'
@@ -46,11 +28,9 @@ export default async function AdminAlunasPage() {
   }
 
   return (
-<<<<<<< HEAD
     <div className="space-y-8">
       <h1 className="text-2xl font-bold text-gray-900">Alunas</h1>
 
-      {/* Pendentes de aprovação */}
       {pendentes.length > 0 && (
         <section className="space-y-3">
           <div className="flex items-center gap-2">
@@ -65,9 +45,7 @@ export default async function AdminAlunasPage() {
                 <div className="min-w-0">
                   <p className="text-sm font-semibold text-gray-900">{profile.nome}</p>
                   <p className="text-xs text-muted-foreground">{profile.email}</p>
-                  {profile.celular && (
-                    <p className="text-xs text-muted-foreground">{profile.celular}</p>
-                  )}
+                  {profile.celular && <p className="text-xs text-muted-foreground">{profile.celular}</p>}
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
                   <span className="text-xs text-amber-600 font-medium hidden sm:block">Atribuir:</span>
@@ -79,7 +57,6 @@ export default async function AdminAlunasPage() {
         </section>
       )}
 
-      {/* Aprovadas */}
       <section className="space-y-3">
         <div className="flex items-center gap-2">
           <h2 className="text-base font-semibold text-gray-700">Alunas ativas</h2>
@@ -94,9 +71,7 @@ export default async function AdminAlunasPage() {
                 <div className="min-w-0">
                   <p className="text-sm font-semibold text-gray-900">{profile.nome ?? profile.email}</p>
                   <p className="text-xs text-muted-foreground">{profile.email}</p>
-                  {profile.celular && (
-                    <p className="text-xs text-muted-foreground">{profile.celular}</p>
-                  )}
+                  {profile.celular && <p className="text-xs text-muted-foreground">{profile.celular}</p>}
                   <p className="text-xs text-rose-600 mt-0.5">
                     {profile.turma?.nome}
                     {profile.tipo && <span className="text-gray-400"> · {tipoLabel(profile.tipo)}</span>}
@@ -113,7 +88,6 @@ export default async function AdminAlunasPage() {
         )}
       </section>
 
-      {/* Sem cadastro */}
       {semCadastro.length > 0 && (
         <section className="space-y-3">
           <div className="flex items-center gap-2">
@@ -131,48 +105,6 @@ export default async function AdminAlunasPage() {
             ))}
           </div>
         </section>
-=======
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900">Alunas</h1>
-
-      {profiles && profiles.length > 0 ? (
-        <div className="bg-white rounded-lg border divide-y">
-          {profiles.map((profile: any) => {
-            const turmaLabel = (profile.turma as any)?.nome
-            const tipo = tipoLabel(profile.tipo)
-            const configurada = !!turmaLabel && !!tipo
-
-            return (
-              <div key={profile.id} className="flex items-center justify-between px-4 py-3 gap-4">
-                <div className="min-w-0">
-                  <p className="font-medium text-sm truncate">{profile.nome || profile.email}</p>
-                  <p className="text-xs text-muted-foreground truncate">{profile.email}</p>
-                </div>
-                <div className="flex items-center gap-3 shrink-0">
-                  {configurada ? (
-                    <div className="text-right">
-                      <p className="text-sm font-medium text-gray-700">{turmaLabel}</p>
-                      <p className="text-xs text-muted-foreground">{tipo}</p>
-                    </div>
-                  ) : (
-                    <span className="text-xs text-amber-600 bg-amber-50 px-2 py-1 rounded-full">
-                      Sem turma
-                    </span>
-                  )}
-                  <EditProfileDialog
-                    profile={profile as Profile}
-                    turmas={turmas as Turma[]}
-                  />
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      ) : (
-        <div className="text-center py-12 text-muted-foreground">
-          Nenhuma aluna cadastrada ainda.
-        </div>
->>>>>>> 69df8e35185937196dbd5775c87abd9c59859411
       )}
     </div>
   )
