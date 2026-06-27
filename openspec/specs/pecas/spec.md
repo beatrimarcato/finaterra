@@ -6,20 +6,33 @@ Gerenciamento de peças de cerâmica prontas para retirada. Inclui lançamento p
 
 ## Requirements
 
-### Requirement: Lançamento de peça pela admin
-A admin DEVE poder registrar uma peça pronta informando a aluna (selecionada da lista de cadastradas), o peso em gramas ou quilos e uma foto opcional da peça.
+### Requirement: Lançamento de peças pela admin
+A admin DEVE poder registrar uma ou mais peças prontas em um único lançamento, selecionando a aluna uma vez e informando peso e foto (opcional) para cada peça individualmente.
 
-#### Scenario: Admin lança peça com sucesso
+#### Scenario: Admin lança uma única peça
 - GIVEN a admin está autenticada em `/admin/pecas`
-- WHEN preenche aluna, peso e clica em "Lançar peça"
+- WHEN preenche aluna, peso de uma peça e clica em "Lançar peça"
 - THEN uma nova peça é criada com status `pendente`
 - AND a peça aparece na lista da admin
+
+#### Scenario: Admin lança múltiplas peças de uma vez
+- GIVEN a admin está no formulário de lançamento
+- WHEN seleciona uma aluna, preenche peso para a primeira peça e clica em "Adicionar outra peça"
+- THEN um novo item é adicionado ao formulário com seus próprios campos de peso e foto
+- AND ao salvar, cada item gera uma linha separada em `pecas` com status `pendente`
+- AND o botão exibe a contagem ("Lançar 2 peças", "Lançar 3 peças", etc.)
 
 #### Scenario: Tentativa sem selecionar aluna
 - GIVEN a admin está no formulário de nova peça
 - WHEN tenta salvar sem selecionar uma aluna
 - THEN o formulário não é submetido
 - AND uma mensagem de validação é exibida
+
+#### Scenario: Tentativa com peso inválido em algum item
+- GIVEN o formulário tem múltiplos itens
+- WHEN algum item está sem peso ou com peso zero
+- THEN o formulário não é submetido
+- AND uma mensagem indica que todos os pesos precisam ser preenchidos
 
 ### Requirement: Cálculo e exibição do valor
 O sistema DEVE calcular o valor a pagar com base no peso da peça à taxa de R$ 60/kg e exibir esse valor para a admin e para a aluna.

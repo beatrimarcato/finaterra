@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { Peca } from '@/types/database'
 import { Button } from '@/components/ui/button'
 import { confirmarPagamento, deletarPeca } from '@/app/admin/pecas/actions'
+import { useViewMode } from '@/components/view-mode-context'
 
 const PRECO_KG = 60
 
@@ -65,6 +66,8 @@ function DeletarButton({ pecaId }: { pecaId: string }) {
 }
 
 export function PecasAdminList({ pecas }: { pecas: Peca[] }) {
+  const { mode } = useViewMode()
+
   if (pecas.length === 0) {
     return (
       <div className="text-center py-12 text-muted-foreground border rounded-lg bg-white">
@@ -73,28 +76,64 @@ export function PecasAdminList({ pecas }: { pecas: Peca[] }) {
     )
   }
 
+  // Modo mobile: cards empilhados com mais espaço
+  if (mode === 'mobile') {
+    return (
+      <div className="flex flex-col gap-3">
+        {pecas.map((peca) => {
+          const status = STATUS_LABEL[peca.status] ?? STATUS_LABEL.pendente
+          return (
+            <div key={peca.id} className="bg-white rounded-xl border shadow-sm overflow-hidden">
+              <div className="flex gap-3 p-4">
+                <div className="w-20 h-20 rounded-lg bg-gray-100 overflow-hidden shrink-0 flex items-center justify-center">
+                  {peca.foto_url ? (
+                    <Image src={peca.foto_url} alt="Foto da peça" width={80} height={80} className="object-cover w-full h-full" />
+                  ) : (
+                    <span className="text-3xl">🏺</span>
+                  )}
+                </div>
+                <div className="flex-1 min-w-0 space-y-1">
+                  <p className="text-sm font-semibold text-gray-900 truncate">
+                    {peca.profile?.nome ?? peca.profile?.email ?? peca.aluna_id}
+                  </p>
+                  <p className="text-sm text-gray-700 font-medium">
+                    {formatarPeso(peca.peso_gramas)} · {formatarValor(calcularValor(peca.peso_gramas))}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {new Date(peca.criado_em).toLocaleDateString('pt-BR')}
+                  </p>
+                  <span className={`inline-block text-xs font-medium px-2 py-0.5 rounded-full ${status.className}`}>
+                    {status.label}
+                  </span>
+                </div>
+              </div>
+              {(peca.status === 'comprovante_enviado' || peca.status === 'pendente') && (
+                <div className="border-t px-4 py-3 flex gap-2">
+                  {peca.status === 'comprovante_enviado' && <ConfirmarButton pecaId={peca.id} />}
+                  {peca.status === 'pendente' && <DeletarButton pecaId={peca.id} />}
+                </div>
+              )}
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+
+  // Modo desktop: linhas compactas
   return (
     <div className="border rounded-lg bg-white divide-y overflow-hidden">
       {pecas.map((peca) => {
         const status = STATUS_LABEL[peca.status] ?? STATUS_LABEL.pendente
         return (
           <div key={peca.id} className="flex items-center gap-4 px-4 py-3">
-            {/* Foto */}
             <div className="w-14 h-14 rounded-md bg-gray-100 overflow-hidden shrink-0 flex items-center justify-center">
               {peca.foto_url ? (
-                <Image
-                  src={peca.foto_url}
-                  alt="Foto da peça"
-                  width={56}
-                  height={56}
-                  className="object-cover w-full h-full"
-                />
+                <Image src={peca.foto_url} alt="Foto da peça" width={56} height={56} className="object-cover w-full h-full" />
               ) : (
                 <span className="text-2xl">🏺</span>
               )}
             </div>
-
-            {/* Info */}
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-gray-900 truncate">
                 {peca.profile?.nome ?? peca.profile?.email ?? peca.aluna_id}
@@ -106,18 +145,12 @@ export function PecasAdminList({ pecas }: { pecas: Peca[] }) {
                 {new Date(peca.criado_em).toLocaleDateString('pt-BR')}
               </p>
             </div>
-
-            {/* Status + ação */}
             <div className="flex flex-col items-end gap-2 shrink-0">
               <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${status.className}`}>
                 {status.label}
               </span>
-              {peca.status === 'comprovante_enviado' && (
-                <ConfirmarButton pecaId={peca.id} />
-              )}
-              {peca.status === 'pendente' && (
-                <DeletarButton pecaId={peca.id} />
-              )}
+              {peca.status === 'comprovante_enviado' && <ConfirmarButton pecaId={peca.id} />}
+              {peca.status === 'pendente' && <DeletarButton pecaId={peca.id} />}
             </div>
           </div>
         )

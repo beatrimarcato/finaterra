@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { AlunaNav } from '@/components/aluna-nav'
+import { ViewModeProvider } from '@/components/view-mode-context'
 
 const ADMIN_EMAIL = 'beatrimarcato@gmail.com'
 
@@ -22,9 +23,11 @@ export default async function AulasLayout({ children }: { children: React.ReactN
   if (!profile?.turma_id) redirect('/agenda/aguardando')
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-50">
-      <AlunaNav userEmail={user.email!} isAdmin={user.email === ADMIN_EMAIL} />
-      <main className="container mx-auto px-4 py-8">{children}</main>
-    </div>
+    <ViewModeProvider defaultMode="mobile">
+      <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-50">
+        <AlunaNav userEmail={user.email!} isAdmin={user.email === ADMIN_EMAIL} />
+        <main className="container mx-auto px-4 py-8">{children}</main>
+      </div>
+    </ViewModeProvider>
   )
 }

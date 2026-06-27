@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
+import { ViewModeSwitch } from '@/components/view-mode-switch'
 
 export function AlunaNav({ userEmail, isAdmin }: { userEmail: string; isAdmin?: boolean }) {
   const pathname = usePathname()
@@ -32,6 +33,7 @@ export function AlunaNav({ userEmail, isAdmin }: { userEmail: string; isAdmin?: 
           </Link>
         </div>
         <div className="flex items-center gap-3">
+          <ViewModeSwitch />
           <span className="text-sm text-muted-foreground hidden sm:block">{userEmail}</span>
           {isAdmin && (
             <Link href="/admin">

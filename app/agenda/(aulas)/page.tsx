@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
-import { AulaCard } from '@/components/aula-card'
 import { Aula } from '@/types/database'
+import { AulasGrid } from '@/components/aulas-grid'
 
 export default async function AgendaPage() {
   const supabase = await createClient()
@@ -63,22 +63,11 @@ export default async function AgendaPage() {
           <p className="text-sm text-muted-foreground mt-1">{turmaLabel}{tipoLabel && ` · ${tipoLabel}`}</p>
         )}
       </div>
-      {aulas && aulas.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {aulas.map((aula: Aula) => (
-            <AulaCard
-              key={aula.id}
-              aula={aula}
-              isAgendada={aulaIdsAgendadas.has(aula.id)}
-              userId={user!.id}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="text-center py-12 text-muted-foreground">
-          Nenhuma aula disponível no momento.
-        </div>
-      )}
+      <AulasGrid
+        aulas={(aulas ?? []) as Aula[]}
+        aulaIdsAgendadas={aulaIdsAgendadas}
+        userId={user!.id}
+      />
     </div>
   )
 }

@@ -8,9 +8,10 @@ import { Button } from '@/components/ui/button'
 type Props = {
   pecaId: string
   alunaId: string
+  fullWidth?: boolean
 }
 
-export function UploadComprovanteButton({ pecaId, alunaId }: Props) {
+export function UploadComprovanteButton({ pecaId, alunaId, fullWidth }: Props) {
   const router = useRouter()
   const inputRef = useRef<HTMLInputElement>(null)
   const [loading, setLoading] = useState(false)
@@ -64,6 +65,7 @@ export function UploadComprovanteButton({ pecaId, alunaId }: Props) {
         variant="outline"
         disabled={loading}
         onClick={() => inputRef.current?.click()}
+        className={fullWidth ? 'w-full' : ''}
       >
         {loading ? 'Enviando...' : 'Enviar comprovante'}
       </Button>

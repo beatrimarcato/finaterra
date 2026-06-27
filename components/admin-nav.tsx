@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
+import { ViewModeSwitch } from '@/components/view-mode-switch'
 
 const LINKS = [
   { href: '/admin', label: 'Aulas', exact: true },
@@ -42,6 +43,7 @@ export function AdminNav({ userEmail }: { userEmail: string }) {
           })}
         </div>
         <div className="flex items-center gap-3">
+          <ViewModeSwitch />
           <span className="text-sm text-muted-foreground hidden sm:block">{userEmail}</span>
           <Link href="/agenda">
             <Button variant="outline" size="sm">Ver agenda</Button>
