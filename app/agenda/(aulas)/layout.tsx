@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { AlunaNav } from '@/components/aluna-nav'
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'beatrimarcato@gmail.com'
+const ADMIN_EMAIL = 'beatrimarcato@gmail.com'
 
 export default async function AulasLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient()
