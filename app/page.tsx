@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'beatrimarcato@gmail.com'
+const ADMIN_EMAIL = 'beatrimarcato@gmail.com'
 
 export default async function HomePage() {
   const supabase = await createClient()
