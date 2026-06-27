@@ -4,7 +4,17 @@ import { useTransition } from 'react'
 import Image from 'next/image'
 import { Peca } from '@/types/database'
 import { Button } from '@/components/ui/button'
-import { confirmarPagamento } from '@/app/admin/pecas/actions'
+import { confirmarPagamento, deletarPeca } from '@/app/admin/pecas/actions'
+
+const PRECO_KG = 60
+
+function calcularValor(gramas: number) {
+  return (gramas / 1000) * PRECO_KG
+}
+
+function formatarValor(valor: number) {
+  return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+}
 
 const STATUS_LABEL: Record<string, { label: string; className: string }> = {
   pendente: { label: 'Pendente', className: 'bg-amber-100 text-amber-700' },
@@ -29,6 +39,27 @@ function ConfirmarButton({ pecaId }: { pecaId: string }) {
       onClick={() => startTransition(() => confirmarPagamento(pecaId))}
     >
       {pending ? 'Confirmando...' : 'Confirmar pgto'}
+    </Button>
+  )
+}
+
+function DeletarButton({ pecaId }: { pecaId: string }) {
+  const [pending, startTransition] = useTransition()
+
+  const handleClick = () => {
+    if (!confirm('Excluir esta peça? Esta ação não pode ser desfeita.')) return
+    startTransition(() => deletarPeca(pecaId))
+  }
+
+  return (
+    <Button
+      size="sm"
+      variant="outline"
+      disabled={pending}
+      onClick={handleClick}
+      className="text-red-600 hover:text-red-700 hover:border-red-300"
+    >
+      {pending ? 'Excluindo...' : 'Excluir'}
     </Button>
   )
 }
@@ -68,7 +99,9 @@ export function PecasAdminList({ pecas }: { pecas: Peca[] }) {
               <p className="text-sm font-semibold text-gray-900 truncate">
                 {peca.profile?.nome ?? peca.profile?.email ?? peca.aluna_id}
               </p>
-              <p className="text-xs text-muted-foreground">{formatarPeso(peca.peso_gramas)}</p>
+              <p className="text-xs text-muted-foreground">
+                {formatarPeso(peca.peso_gramas)} · <span className="font-medium text-gray-700">{formatarValor(calcularValor(peca.peso_gramas))}</span>
+              </p>
               <p className="text-xs text-muted-foreground">
                 {new Date(peca.criado_em).toLocaleDateString('pt-BR')}
               </p>
@@ -81,6 +114,9 @@ export function PecasAdminList({ pecas }: { pecas: Peca[] }) {
               </span>
               {peca.status === 'comprovante_enviado' && (
                 <ConfirmarButton pecaId={peca.id} />
+              )}
+              {peca.status === 'pendente' && (
+                <DeletarButton pecaId={peca.id} />
               )}
             </div>
           </div>

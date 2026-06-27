@@ -13,10 +13,11 @@
 
 ## 3. Tela admin
 
-- [x] 3.1 Criar `app/admin/pecas/actions.ts` com server action `confirmarPagamento`
+- [x] 3.1 Criar `app/admin/pecas/actions.ts` com server actions `confirmarPagamento` e `deletarPeca`
 - [x] 3.2 Criar `components/nova-peca-dialog.tsx` (formulário: dropdown alunas, peso g/kg, foto)
-- [x] 3.3 Criar `components/pecas-admin-list.tsx` (tabela com foto, aluna, peso, status, botão confirmar)
+- [x] 3.3 Criar `components/pecas-admin-list.tsx` (tabela com foto, aluna, peso, status, botões confirmar e excluir)
 - [x] 3.4 Criar `app/admin/pecas/page.tsx` compondo os componentes acima
+- [x] 3.5 Adicionar policy RLS `"Admin pode excluir peças pendentes"` na migration
 
 ## 4. Tela aluna
 

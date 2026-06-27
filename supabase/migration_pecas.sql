@@ -43,6 +43,10 @@ create policy "Aluna pode atualizar sua própria peça"
   using (auth.uid() = aluna_id)
   with check (auth.uid() = aluna_id);
 
+create policy "Admin pode excluir peças pendentes"
+  on public.pecas for delete to authenticated
+  using (public.is_admin() and status = 'pendente');
+
 -- 4. Storage buckets
 -- pecas-fotos: público (fotos das peças não são sensíveis)
 insert into storage.buckets (id, name, public)

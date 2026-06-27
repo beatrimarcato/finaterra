@@ -62,6 +62,22 @@ A admin DEVE poder confirmar o pagamento de uma peça com status `comprovante_en
 
 ---
 
+### Requirement: Exclusão de peça pendente pela admin
+A admin DEVE poder excluir peças com status `pendente`, com confirmação antes da ação.
+
+#### Scenario: Admin exclui peça pendente
+- GIVEN uma peça com status `pendente`
+- WHEN a admin clica em "Excluir" e confirma o diálogo
+- THEN a peça é removida permanentemente
+- AND some da lista imediatamente
+
+#### Scenario: Exclusão bloqueada para outros status
+- GIVEN uma peça com status `comprovante_enviado` ou `confirmado`
+- WHEN a admin visualiza a peça
+- THEN o botão "Excluir" não está disponível
+
+---
+
 ### Requirement: Isolamento por aluna
 O sistema DEVE garantir que cada aluna acesse apenas suas próprias peças.
 

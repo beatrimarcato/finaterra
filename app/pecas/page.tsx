@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { createClient } from '@/lib/supabase/server'
 import { Peca } from '@/types/database'
 import { UploadComprovanteButton } from '@/components/upload-comprovante-button'
+import { PixInfo } from '@/components/pix-info'
 
 const STATUS_LABEL: Record<string, { label: string; className: string }> = {
   pendente: { label: 'Aguardando pagamento', className: 'bg-amber-100 text-amber-700' },
@@ -79,7 +80,10 @@ export default async function PecasPage() {
                 </p>
 
                 {peca.status === 'pendente' && (
-                  <UploadComprovanteButton pecaId={peca.id} alunaId={user!.id} />
+                  <>
+                    <PixInfo pesoGramas={peca.peso_gramas} />
+                    <UploadComprovanteButton pecaId={peca.id} alunaId={user!.id} />
+                  </>
                 )}
               </div>
             </div>

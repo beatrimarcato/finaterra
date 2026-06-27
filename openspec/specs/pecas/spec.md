@@ -21,6 +21,21 @@ A admin DEVE poder registrar uma peça pronta informando a aluna (selecionada da
 - THEN o formulário não é submetido
 - AND uma mensagem de validação é exibida
 
+### Requirement: Cálculo e exibição do valor
+O sistema DEVE calcular o valor a pagar com base no peso da peça à taxa de R$ 60/kg e exibir esse valor para a admin e para a aluna.
+
+#### Scenario: Exibição do valor para a admin
+- GIVEN uma peça lançada com determinado peso
+- WHEN a admin visualiza a lista de peças
+- THEN o valor calculado (R$ 60/kg) é exibido ao lado do peso
+
+#### Scenario: Exibição do valor e instrução de pagamento para a aluna
+- GIVEN uma peça com status `pendente`
+- WHEN a aluna visualiza a peça
+- THEN o valor calculado é exibido em destaque
+- AND a chave Pix CNPJ `43536626000120` é exibida com botão de cópia
+- AND há instrução para enviar o comprovante após o pagamento
+
 ### Requirement: Visualização de peças pela aluna
 A aluna DEVE poder visualizar suas peças prontas, incluindo foto (quando disponível), peso e status do pagamento.
 
@@ -57,6 +72,20 @@ A admin DEVE poder confirmar o pagamento de uma peça com status `comprovante_en
 - WHEN a admin clica em "Confirmar pagamento"
 - THEN o status da peça muda para `confirmado`
 - AND o botão de confirmação deixa de aparecer
+
+### Requirement: Exclusão de peça pendente pela admin
+A admin DEVE poder excluir peças com status `pendente`, com confirmação antes da ação.
+
+#### Scenario: Admin exclui peça pendente
+- GIVEN uma peça com status `pendente`
+- WHEN a admin clica em "Excluir" e confirma o diálogo
+- THEN a peça é removida permanentemente
+- AND some da lista imediatamente
+
+#### Scenario: Exclusão bloqueada para outros status
+- GIVEN uma peça com status `comprovante_enviado` ou `confirmado`
+- WHEN a admin visualiza a peça
+- THEN o botão "Excluir" não está disponível
 
 ### Requirement: Isolamento por aluna
 O sistema DEVE garantir que cada aluna acesse apenas suas próprias peças.
