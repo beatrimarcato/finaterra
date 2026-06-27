@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { AdminNav } from '@/components/admin-nav'
 import { ViewModeProvider } from '@/components/view-mode-context'
 
-const ADMIN_EMAILS = ['beatrimarcato@gmail.com', 'administrativo@finaterraceramica.com.br']
+const ADMIN_EMAILS = ['beatrimarcato@gmail.com', 'administrativo@finaterraceramica.com.br', 'm.annegallant@gmail.com']
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient()
