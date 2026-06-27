@@ -14,7 +14,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <ViewModeProvider defaultMode="desktop">
       <div className="min-h-screen bg-gray-50">
-        <AdminNav userEmail={user.email} />
+        <AdminNav userEmail={user.email!} />
         <main className="container mx-auto px-4 py-8">{children}</main>
       </div>
     </ViewModeProvider>
