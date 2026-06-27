@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { createClient } from '@/lib/supabase/server'
 import { Peca, Profile } from '@/types/database'
 import { NovaPecaDialog } from '@/components/nova-peca-dialog'
