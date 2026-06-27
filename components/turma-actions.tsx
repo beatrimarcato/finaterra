@@ -110,7 +110,7 @@ export function TurmaActions({ turmaId, turmaAtual, semanasAtual }: TurmaActions
       <div className="flex gap-2 shrink-0">
         <button
           onClick={abrirEdicao}
-          className="text-xs text-gray-500 hover:text-rose-600 transition-colors px-2 py-1 rounded hover:bg-rose-50"
+          className="text-xs text-gray-500 hover:text-brand-600 transition-colors px-2 py-1 rounded hover:bg-brand-50"
         >
           Editar
         </button>
@@ -145,7 +145,7 @@ export function TurmaActions({ turmaId, turmaAtual, semanasAtual }: TurmaActions
               <select
                 value={novasSemanas}
                 onChange={e => setNovasSemanas(e.target.value as SemanasDoMes | '')}
-                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-600"
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
               >
                 <option value="">Nenhuma regra</option>
                 {(Object.entries(SEMANAS_LABELS) as [SemanasDoMes, string][]).map(([value, label]) => (
@@ -156,7 +156,7 @@ export function TurmaActions({ turmaId, turmaAtual, semanasAtual }: TurmaActions
             {erro && <p className="text-sm text-red-500">{erro}</p>}
             <div className="flex justify-end gap-2">
               <Button type="button" variant="outline" onClick={() => setEstado('fechado')}>Cancelar</Button>
-              <Button type="submit" className="bg-rose-600 hover:bg-rose-700" disabled={loading}>
+              <Button type="submit" className="bg-brand-600 hover:bg-brand-700" disabled={loading}>
                 {loading ? 'Salvando...' : 'Salvar'}
               </Button>
             </div>

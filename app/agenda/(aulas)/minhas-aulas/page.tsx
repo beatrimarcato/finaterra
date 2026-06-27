@@ -17,7 +17,7 @@ export default async function MinhasAulasPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-rose-800">Minhas Aulas</h1>
+      <h1 className="text-2xl font-bold text-brand-800">Minhas Aulas</h1>
       {agendamentos && agendamentos.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {agendamentos.map((ag: any) => {
@@ -27,7 +27,7 @@ export default async function MinhasAulasPage() {
                 <CardHeader className="pb-2">
                   <div className="flex items-start justify-between">
                     <CardTitle className="text-base">{ag.aula?.titulo}</CardTitle>
-                    <Badge variant={isPast ? 'secondary' : 'default'} className={isPast ? '' : 'bg-rose-600'}>
+                    <Badge variant={isPast ? 'secondary' : 'default'} className={isPast ? '' : 'bg-brand-600'}>
                       {isPast ? 'Concluída' : 'Confirmada'}
                     </Badge>
                   </div>

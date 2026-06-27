@@ -53,14 +53,14 @@ export function AdminAulasFilters() {
             type="date"
             value={de}
             onChange={e => update({ de: e.target.value })}
-            className="rounded-md border border-input px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-rose-600"
+            className="rounded-md border border-input px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600"
           />
           <span className="text-sm text-muted-foreground">até</span>
           <input
             type="date"
             value={ate}
             onChange={e => update({ ate: e.target.value })}
-            className="rounded-md border border-input px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-rose-600"
+            className="rounded-md border border-input px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600"
           />
         </div>
       )}

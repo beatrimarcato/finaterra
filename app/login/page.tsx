@@ -30,10 +30,10 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 to-pink-100">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-50 to-accent-100">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-rose-700">Finaterra Agenda</CardTitle>
+          <CardTitle className="text-2xl font-bold text-brand-700">Finaterra Agenda</CardTitle>
           <CardDescription>Entre com seu e-mail para acessar</CardDescription>
         </CardHeader>
         <CardContent>
@@ -56,7 +56,7 @@ export default function LoginPage() {
                 />
               </div>
               {error && <p className="text-sm text-red-500">{error}</p>}
-              <Button type="submit" className="w-full bg-rose-600 hover:bg-rose-700" disabled={loading}>
+              <Button type="submit" className="w-full bg-brand-600 hover:bg-brand-700" disabled={loading}>
                 {loading ? 'Enviando...' : 'Enviar link de acesso'}
               </Button>
             </form>

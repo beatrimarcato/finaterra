@@ -32,7 +32,7 @@ export default async function TurmasPage() {
                   {new Date(turma.criado_em).toLocaleDateString('pt-BR')}
                 </span>
                 {turma.semanas_do_mes && (
-                  <p className="text-xs text-rose-600 mt-0.5">
+                  <p className="text-xs text-brand-600 mt-0.5">
                     {SEMANAS_LABELS[turma.semanas_do_mes]}
                   </p>
                 )}

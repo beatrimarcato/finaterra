@@ -31,7 +31,7 @@ export function TurmaSelector({ profileId, turmaAtualId, turmas }: TurmaSelector
       value={turmaAtualId ?? ''}
       onChange={handleChange}
       disabled={loading}
-      className="rounded-md border border-input bg-background px-3 py-1.5 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-600 disabled:opacity-50 shrink-0"
+      className="rounded-md border border-input bg-background px-3 py-1.5 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 disabled:opacity-50 shrink-0"
     >
       <option value="">Sem turma</option>
       {turmas.map(t => (

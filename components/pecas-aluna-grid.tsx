@@ -30,7 +30,7 @@ export function PecasAlunaGrid({ pecas, userId }: Props) {
     return (
       <div className="flex flex-col items-center justify-center py-24 text-center space-y-3">
         <p className="text-4xl">🏺</p>
-        <h2 className="text-xl font-semibold text-rose-800">Nenhuma peça pronta ainda</h2>
+        <h2 className="text-xl font-semibold text-brand-800">Nenhuma peça pronta ainda</h2>
         <p className="text-muted-foreground max-w-sm">
           Quando sua peça estiver pronta para retirada, ela aparecerá aqui com as informações de pagamento.
         </p>

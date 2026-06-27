@@ -86,7 +86,7 @@ export function EditProfileDialog({ profile, turmas }: EditProfileDialogProps) {
                   onClick={() => setForm({ ...form, tipo: opt.value })}
                   className={`flex-1 rounded-md border py-2 text-xs font-medium transition-colors ${
                     form.tipo === opt.value
-                      ? 'bg-rose-600 text-white border-rose-600'
+                      ? 'bg-brand-600 text-white border-brand-600'
                       : 'bg-background border-input hover:bg-accent'
                   }`}
                 >
@@ -98,7 +98,7 @@ export function EditProfileDialog({ profile, turmas }: EditProfileDialogProps) {
 
           <div className="flex justify-end gap-2">
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>Cancelar</Button>
-            <Button type="submit" className="bg-rose-600 hover:bg-rose-700" disabled={loading}>
+            <Button type="submit" className="bg-brand-600 hover:bg-brand-700" disabled={loading}>
               {loading ? 'Salvando...' : 'Salvar'}
             </Button>
           </div>

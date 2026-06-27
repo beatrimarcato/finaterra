@@ -72,7 +72,7 @@ export default async function AlunasPage() {
                   <p className="text-sm font-semibold text-gray-900">{profile.nome ?? profile.email}</p>
                   <p className="text-xs text-muted-foreground">{profile.email}</p>
                   {profile.celular && <p className="text-xs text-muted-foreground">{profile.celular}</p>}
-                  <p className="text-xs text-rose-600 mt-0.5">
+                  <p className="text-xs text-brand-600 mt-0.5">
                     {profile.turma?.nome}
                     {profile.tipo && <span className="text-gray-400"> · {tipoLabel(profile.tipo)}</span>}
                   </p>

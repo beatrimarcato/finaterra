@@ -25,12 +25,12 @@ export function PixInfo({ pesoGramas }: { pesoGramas: number }) {
   const valor = calcularValor(pesoGramas)
 
   return (
-    <div className="rounded-lg border border-rose-200 bg-rose-50 p-4 space-y-3 text-sm">
-      <p className="font-semibold text-rose-800">Como pagar</p>
+    <div className="rounded-lg border border-brand-200 bg-brand-50 p-4 space-y-3 text-sm">
+      <p className="font-semibold text-brand-800">Como pagar</p>
 
       <p className="text-gray-700">
         Valor a pagar:{' '}
-        <span className="font-bold text-rose-700 text-base">{formatarValor(valor)}</span>
+        <span className="font-bold text-brand-700 text-base">{formatarValor(valor)}</span>
         <span className="text-xs text-muted-foreground ml-1">(R$ 60/kg · {pesoGramas}g)</span>
       </p>
 
@@ -42,7 +42,7 @@ export function PixInfo({ pesoGramas }: { pesoGramas: number }) {
           </code>
           <button
             onClick={copiar}
-            className="inline-flex items-center gap-1 text-xs text-rose-700 hover:text-rose-900 font-medium transition-colors"
+            className="inline-flex items-center gap-1 text-xs text-brand-700 hover:text-brand-900 font-medium transition-colors"
             title="Copiar chave Pix"
           >
             {copiado ? (

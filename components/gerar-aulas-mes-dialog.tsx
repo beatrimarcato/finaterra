@@ -110,7 +110,7 @@ export function GerarAulasMesDialog({ turma }: GerarAulasMesDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="text-xs text-rose-600 hover:text-rose-800 font-medium transition-colors px-2 py-1 rounded hover:bg-rose-50">
+      <DialogTrigger className="text-xs text-brand-600 hover:text-brand-800 font-medium transition-colors px-2 py-1 rounded hover:bg-brand-50">
         Gerar aulas do mês
       </DialogTrigger>
       <DialogContent>
@@ -118,7 +118,7 @@ export function GerarAulasMesDialog({ turma }: GerarAulasMesDialogProps) {
           <DialogTitle>Gerar aulas — {turma.nome}</DialogTitle>
         </DialogHeader>
 
-        <div className="rounded-md bg-rose-50 border border-rose-200 px-3 py-2 text-sm text-rose-700">
+        <div className="rounded-md bg-brand-50 border border-brand-200 px-3 py-2 text-sm text-brand-700">
           Regra: <strong>{SEMANAS_LABELS[semanas]}</strong>
         </div>
 
@@ -131,7 +131,7 @@ export function GerarAulasMesDialog({ turma }: GerarAulasMesDialogProps) {
               <select
                 value={mes}
                 onChange={e => setMes(Number(e.target.value))}
-                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-600"
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
               >
                 {MESES.map((nome, idx) => (
                   <option key={idx} value={idx}>{nome}</option>
@@ -143,7 +143,7 @@ export function GerarAulasMesDialog({ turma }: GerarAulasMesDialogProps) {
               <select
                 value={ano}
                 onChange={e => setAno(Number(e.target.value))}
-                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-600"
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
               >
                 {anos.map(a => (
                   <option key={a} value={a}>{a}</option>
@@ -155,7 +155,7 @@ export function GerarAulasMesDialog({ turma }: GerarAulasMesDialogProps) {
               <select
                 value={diaSemana}
                 onChange={e => setDiaSemana(Number(e.target.value))}
-                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-600"
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
               >
                 {DIAS_SEMANA.map((nome, idx) => (
                   <option key={idx} value={idx}>{nome}</option>
@@ -224,7 +224,7 @@ export function GerarAulasMesDialog({ turma }: GerarAulasMesDialogProps) {
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>Cancelar</Button>
             <Button
               type="submit"
-              className="bg-rose-600 hover:bg-rose-700"
+              className="bg-brand-600 hover:bg-brand-700"
               disabled={loading || datasPreview.length === 0}
             >
               {loading ? 'Criando...' : `Criar ${datasPreview.length} aula${datasPreview.length !== 1 ? 's' : ''}`}

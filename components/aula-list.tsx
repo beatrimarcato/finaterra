@@ -51,7 +51,7 @@ export function AulaList({ aulas }: { aulas: AulaComAgendamentos[] }) {
             >
               <p className="font-medium text-sm text-gray-900">{aula.titulo}</p>
 
-              <span className="text-xs text-rose-600 font-medium">
+              <span className="text-xs text-brand-600 font-medium">
                 {aula.turma?.nome ?? <span className="text-muted-foreground italic">Sem turma</span>}
               </span>
 

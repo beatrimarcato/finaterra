@@ -28,14 +28,14 @@ export function AdminNav({ userEmail }: { userEmail: string }) {
     <nav className="bg-white border-b shadow-sm">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <span className="font-bold text-rose-700 text-lg">Finaterra Admin</span>
+          <span className="font-bold text-brand-700 text-lg">Finaterra Admin</span>
           {LINKS.map(({ href, label, exact }) => {
             const active = exact ? pathname === href : pathname.startsWith(href)
             return (
               <Link
                 key={href}
                 href={href}
-                className={`text-sm font-medium transition-colors ${active ? 'text-rose-600' : 'text-gray-600 hover:text-rose-600'}`}
+                className={`text-sm font-medium transition-colors ${active ? 'text-brand-600' : 'text-gray-600 hover:text-brand-600'}`}
               >
                 {label}
               </Link>

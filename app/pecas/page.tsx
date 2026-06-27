@@ -16,7 +16,7 @@ export default async function PecasPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-rose-800">Minhas Peças</h1>
+      <h1 className="text-2xl font-bold text-brand-800">Minhas Peças</h1>
       <PecasAlunaGrid pecas={pecas} userId={user!.id} />
     </div>
   )

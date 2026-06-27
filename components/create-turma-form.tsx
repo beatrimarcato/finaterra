@@ -57,7 +57,7 @@ export function CreateTurmaForm() {
             id="semanas-turma"
             value={semanas}
             onChange={e => setSemanas(e.target.value as SemanasDoMes | '')}
-            className="rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-600"
+            className="rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
           >
             <option value="">Nenhuma regra</option>
             {(Object.entries(SEMANAS_LABELS) as [SemanasDoMes, string][]).map(([value, label]) => (
@@ -65,7 +65,7 @@ export function CreateTurmaForm() {
             ))}
           </select>
         </div>
-        <Button type="submit" className="bg-rose-600 hover:bg-rose-700 shrink-0" disabled={loading}>
+        <Button type="submit" className="bg-brand-600 hover:bg-brand-700 shrink-0" disabled={loading}>
           {loading ? 'Criando...' : 'Criar'}
         </Button>
       </div>

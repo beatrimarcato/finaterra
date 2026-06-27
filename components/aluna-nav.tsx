@@ -21,14 +21,14 @@ export function AlunaNav({ userEmail, isAdmin }: { userEmail: string; isAdmin?: 
     <nav className="bg-white border-b shadow-sm">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <span className="font-bold text-rose-700 text-lg">Finaterra Agenda</span>
-          <Link href="/agenda" className={`text-sm font-medium ${pathname === '/agenda' ? 'text-rose-600' : 'text-gray-600 hover:text-rose-600'}`}>
+          <span className="font-bold text-brand-700 text-lg">Finaterra Agenda</span>
+          <Link href="/agenda" className={`text-sm font-medium ${pathname === '/agenda' ? 'text-brand-600' : 'text-gray-600 hover:text-brand-600'}`}>
             Agenda
           </Link>
-          <Link href="/agenda/minhas-aulas" className={`text-sm font-medium ${pathname === '/agenda/minhas-aulas' ? 'text-rose-600' : 'text-gray-600 hover:text-rose-600'}`}>
+          <Link href="/agenda/minhas-aulas" className={`text-sm font-medium ${pathname === '/agenda/minhas-aulas' ? 'text-brand-600' : 'text-gray-600 hover:text-brand-600'}`}>
             Minhas Aulas
           </Link>
-          <Link href="/pecas" className={`text-sm font-medium ${pathname.startsWith('/pecas') ? 'text-rose-600' : 'text-gray-600 hover:text-rose-600'}`}>
+          <Link href="/pecas" className={`text-sm font-medium ${pathname.startsWith('/pecas') ? 'text-brand-600' : 'text-gray-600 hover:text-brand-600'}`}>
             Peças
           </Link>
         </div>

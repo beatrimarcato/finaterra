@@ -4,6 +4,28 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ============================================================
+   TEMA FINATERRA — Marrom & Mostarda
+   Cores novas (brand/accent) sem conflito com a escala rose/pink
+   do Tailwind. Contraste WCAG AA: brand-600 = 6.9:1 vs branco.
+   ============================================================ */
+@theme {
+  --color-brand-50:   #FBF5EF;
+  --color-brand-100:  #F3E2CA;
+  --color-brand-200:  #E4C49A;
+  --color-brand-300:  #D0A06C;
+  --color-brand-400:  #BB7C40;
+  --color-brand-500:  #9A5F28;
+  --color-brand-600:  #7C4A1E;
+  --color-brand-700:  #6A3A14;
+  --color-brand-800:  #4E2810;
+  --color-brand-900:  #361A08;
+
+  --color-accent-50:  #FEFBF0;
+  --color-accent-100: #FDF3D0;
+  --color-accent-200: #F7DE90;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -117,36 +139,6 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-/* ============================================================
-   TEMA FINATERRA — Marrom & Mostarda
-   Redefine as escalas rose-* e pink-* do Tailwind sem alterar
-   nenhum componente. Todos os rose-*/pink-* passam a renderizar
-   nas cores abaixo.
-   Contraste WCAG AA verificado: rose-600 = 6.9:1 vs branco.
-   ============================================================ */
-@theme {
-  /* Marrom (substitui rose-*) */
-  --color-rose-50:  #FBF5EF;
-  --color-rose-100: #F3E2CA;
-  --color-rose-200: #E4C49A;
-  --color-rose-300: #D0A06C;
-  --color-rose-400: #BB7C40;
-  --color-rose-500: #9A5F28;
-  --color-rose-600: #7C4A1E;  /* primário — botões, links, nav */
-  --color-rose-700: #6A3A14;  /* hover */
-  --color-rose-800: #4E2810;  /* headings */
-  --color-rose-900: #361A08;
-
-  /* Mostarda (substitui pink-*) */
-  --color-pink-50:  #FEFBF0;
-  --color-pink-100: #FDF3D0;
-  --color-pink-200: #F7DE90;
-  --color-pink-300: #F0C940;
-  --color-pink-400: #D4A824;
-  --color-pink-500: #B8891A;
-  --color-pink-600: #9C6E12;
-  --color-pink-700: #7E550A;
-}
 
 @layer base {
   * {

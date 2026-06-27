@@ -20,7 +20,7 @@ export default async function PecasLayout({ children }: { children: React.ReactN
 
   return (
     <ViewModeProvider defaultMode="mobile">
-      <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-50">
+      <div className="min-h-screen bg-gradient-to-br from-brand-50 to-accent-50">
         <AlunaNav userEmail={user.email!} isAdmin={user.email === ADMIN_EMAIL} />
         <main className="container mx-auto px-4 py-8">{children}</main>
       </div>

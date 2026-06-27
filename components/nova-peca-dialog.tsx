@@ -108,7 +108,7 @@ export function NovaPecaDialog({ alunas }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) resetForm() }}>
-      <DialogTrigger className="inline-flex items-center justify-center rounded-md bg-rose-600 px-4 py-2 text-sm font-medium text-white hover:bg-rose-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-600">
+      <DialogTrigger className="inline-flex items-center justify-center rounded-md bg-brand-600 px-4 py-2 text-sm font-medium text-white hover:bg-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600">
         Lançar peça
       </DialogTrigger>
       <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
@@ -196,7 +196,7 @@ export function NovaPecaDialog({ alunas }: Props) {
             <button
               type="button"
               onClick={adicionarItem}
-              className="w-full rounded-lg border-2 border-dashed border-gray-300 py-2 text-sm text-gray-500 hover:border-rose-300 hover:text-rose-600 transition-colors"
+              className="w-full rounded-lg border-2 border-dashed border-gray-300 py-2 text-sm text-gray-500 hover:border-brand-300 hover:text-brand-600 transition-colors"
             >
               + Adicionar outra peça
             </button>

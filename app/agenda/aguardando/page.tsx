@@ -18,10 +18,10 @@ export default async function AguardandoPage() {
   if (!profile?.nome) redirect('/agenda/cadastro')
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 to-pink-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-50 to-accent-100 px-4">
       <div className="w-full max-w-md text-center space-y-4">
         <div className="text-5xl">⏳</div>
-        <h1 className="text-2xl font-bold text-rose-700">Cadastro recebido!</h1>
+        <h1 className="text-2xl font-bold text-brand-700">Cadastro recebido!</h1>
         <p className="text-gray-600">
           Olá, <strong>{profile?.nome}</strong>! Seu cadastro foi enviado e está aguardando aprovação da professora.
         </p>
@@ -30,7 +30,7 @@ export default async function AguardandoPage() {
         </p>
         <a
           href="/agenda"
-          className="inline-block mt-4 text-sm text-rose-600 underline hover:text-rose-700"
+          className="inline-block mt-4 text-sm text-brand-600 underline hover:text-brand-700"
         >
           Verificar novamente
         </a>

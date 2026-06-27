@@ -36,10 +36,10 @@ export default function CadastroPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 to-pink-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-50 to-accent-100 px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-rose-700">Bem-vinda!</CardTitle>
+          <CardTitle className="text-2xl font-bold text-brand-700">Bem-vinda!</CardTitle>
           <CardDescription>
             Complete seu cadastro para solicitar acesso às aulas da Finaterra.
           </CardDescription>
@@ -70,7 +70,7 @@ export default function CadastroPage() {
             {erro && <p className="text-sm text-red-500">{erro}</p>}
             <Button
               type="submit"
-              className="w-full bg-rose-600 hover:bg-rose-700"
+              className="w-full bg-brand-600 hover:bg-brand-700"
               disabled={loading}
             >
               {loading ? 'Salvando...' : 'Enviar cadastro'}

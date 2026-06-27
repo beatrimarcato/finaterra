@@ -65,7 +65,7 @@ export function AulaCard({ aula, isAdmin, isAgendada, userId }: AulaCardProps) {
         </div>
         <div className="flex flex-wrap gap-1.5 pt-1">
           {aula.turma?.nome && (
-            <span className="text-xs px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 font-medium">
+            <span className="text-xs px-2 py-0.5 rounded-full bg-brand-100 text-brand-700 font-medium">
               {aula.turma.nome}
             </span>
           )}
@@ -93,7 +93,7 @@ export function AulaCard({ aula, isAdmin, isAgendada, userId }: AulaCardProps) {
             ) : (
               <Button
                 size="sm"
-                className="w-full bg-rose-600 hover:bg-rose-700"
+                className="w-full bg-brand-600 hover:bg-brand-700"
                 disabled={lotada || loading}
                 onClick={handleAgendar}
               >

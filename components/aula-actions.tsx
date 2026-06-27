@@ -97,7 +97,7 @@ export function AulaActions({ aula }: { aula: Aula }) {
       <div className="flex gap-1 shrink-0">
         <button
           onClick={() => { setErro(''); setEstado('editando') }}
-          className="text-xs text-gray-500 hover:text-rose-600 transition-colors px-2 py-1 rounded hover:bg-rose-50"
+          className="text-xs text-gray-500 hover:text-brand-600 transition-colors px-2 py-1 rounded hover:bg-brand-50"
         >
           Editar
         </button>
@@ -134,7 +134,7 @@ export function AulaActions({ aula }: { aula: Aula }) {
                 id="turma-edit"
                 value={form.turma_id}
                 onChange={e => setForm({ ...form, turma_id: e.target.value })}
-                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-600"
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
               >
                 <option value="">Sem turma</option>
                 {turmas.map(t => (
@@ -153,8 +153,8 @@ export function AulaActions({ aula }: { aula: Aula }) {
                     onClick={() => setForm({ ...form, semana_grupo: val as 'a' | 'b' | '' })}
                     className={`flex-1 py-1.5 rounded-md text-sm font-medium border transition-colors ${
                       form.semana_grupo === val
-                        ? 'bg-rose-600 text-white border-rose-600'
-                        : 'bg-white text-gray-700 border-gray-300 hover:border-rose-400'
+                        ? 'bg-brand-600 text-white border-brand-600'
+                        : 'bg-white text-gray-700 border-gray-300 hover:border-brand-400'
                     }`}
                   >
                     {label}
@@ -209,7 +209,7 @@ export function AulaActions({ aula }: { aula: Aula }) {
 
             <div className="flex justify-end gap-2">
               <Button type="button" variant="outline" onClick={() => setEstado('fechado')}>Cancelar</Button>
-              <Button type="submit" className="bg-rose-600 hover:bg-rose-700" disabled={loading}>
+              <Button type="submit" className="bg-brand-600 hover:bg-brand-700" disabled={loading}>
                 {loading ? 'Salvando...' : 'Salvar'}
               </Button>
             </div>

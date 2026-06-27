@@ -58,7 +58,7 @@ export default async function AgendaPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-rose-800">Aulas Disponíveis</h1>
+        <h1 className="text-2xl font-bold text-brand-800">Aulas Disponíveis</h1>
         {turmaLabel && (
           <p className="text-sm text-muted-foreground mt-1">{turmaLabel}{tipoLabel && ` · ${tipoLabel}`}</p>
         )}

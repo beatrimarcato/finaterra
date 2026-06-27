@@ -112,7 +112,7 @@ export function CreateAulaDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="inline-flex items-center justify-center rounded-md bg-rose-600 px-4 py-2 text-sm font-medium text-white hover:bg-rose-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-600">
+      <DialogTrigger className="inline-flex items-center justify-center rounded-md bg-brand-600 px-4 py-2 text-sm font-medium text-white hover:bg-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600">
         + Nova Aula
       </DialogTrigger>
       <DialogContent>
@@ -139,7 +139,7 @@ export function CreateAulaDialog() {
               value={form.turma_id}
               onChange={e => setForm({ ...form, turma_id: e.target.value })}
               required
-              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-600"
+              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
             >
               <option value="">Selecione uma turma</option>
               {turmas.map(t => (
@@ -161,8 +161,8 @@ export function CreateAulaDialog() {
                   onClick={() => { setTipo(t); setDiasSemana([]); setSemanaGrupo('') }}
                   className={`flex-1 py-1.5 rounded-md text-sm font-medium border transition-colors capitalize ${
                     tipo === t
-                      ? 'bg-rose-600 text-white border-rose-600'
-                      : 'bg-white text-gray-700 border-gray-300 hover:border-rose-400'
+                      ? 'bg-brand-600 text-white border-brand-600'
+                      : 'bg-white text-gray-700 border-gray-300 hover:border-brand-400'
                   }`}
                 >
                   {t}
@@ -182,8 +182,8 @@ export function CreateAulaDialog() {
                     onClick={() => setSemanaGrupo(semanaGrupo === g ? '' : g)}
                     className={`flex-1 py-1.5 rounded-md text-sm font-medium border transition-colors ${
                       semanaGrupo === g
-                        ? 'bg-rose-600 text-white border-rose-600'
-                        : 'bg-white text-gray-700 border-gray-300 hover:border-rose-400'
+                        ? 'bg-brand-600 text-white border-brand-600'
+                        : 'bg-white text-gray-700 border-gray-300 hover:border-brand-400'
                     }`}
                   >
                     Grupo {g.toUpperCase()}
@@ -205,8 +205,8 @@ export function CreateAulaDialog() {
                     onClick={() => toggleDia(idx)}
                     className={`flex-1 py-1.5 rounded text-xs font-medium border transition-colors ${
                       diasSemana.includes(idx)
-                        ? 'bg-rose-600 text-white border-rose-600'
-                        : 'bg-white text-gray-600 border-gray-300 hover:border-rose-400'
+                        ? 'bg-brand-600 text-white border-brand-600'
+                        : 'bg-white text-gray-600 border-gray-300 hover:border-brand-400'
                     }`}
                   >
                     {nome}
@@ -278,7 +278,7 @@ export function CreateAulaDialog() {
           </div>
 
           {previewDatas.length > 0 && (
-            <p className="text-xs text-muted-foreground bg-rose-50 rounded px-3 py-2">
+            <p className="text-xs text-muted-foreground bg-brand-50 rounded px-3 py-2">
               {previewDatas.length} aula{previewDatas.length !== 1 ? 's' : ''} serão criadas
               {' '}({new Date(previewDatas[0] + 'T12:00:00').toLocaleDateString('pt-BR')}
               {' '}até {new Date(previewDatas[previewDatas.length - 1] + 'T12:00:00').toLocaleDateString('pt-BR')})
@@ -287,7 +287,7 @@ export function CreateAulaDialog() {
 
           <div className="flex justify-end gap-2">
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>Cancelar</Button>
-            <Button type="submit" className="bg-rose-600 hover:bg-rose-700" disabled={loading}>
+            <Button type="submit" className="bg-brand-600 hover:bg-brand-700" disabled={loading}>
               {loading ? 'Criando...' : 'Criar Aula'}
             </Button>
           </div>
