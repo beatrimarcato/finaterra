@@ -41,3 +41,16 @@ export type Agendamento = {
   criado_em: string
   aula?: Aula
 }
+
+export type PecaStatus = 'pendente' | 'comprovante_enviado' | 'confirmado'
+
+export type Peca = {
+  id: string
+  aluna_id: string
+  peso_gramas: number
+  foto_url: string | null
+  status: PecaStatus
+  comprovante_url: string | null
+  criado_em: string
+  profile?: Pick<Profile, 'nome' | 'email'>
+}

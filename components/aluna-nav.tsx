@@ -27,6 +27,9 @@ export function AlunaNav({ userEmail, isAdmin }: { userEmail: string; isAdmin?: 
           <Link href="/agenda/minhas-aulas" className={`text-sm font-medium ${pathname === '/agenda/minhas-aulas' ? 'text-rose-600' : 'text-gray-600 hover:text-rose-600'}`}>
             Minhas Aulas
           </Link>
+          <Link href="/pecas" className={`text-sm font-medium ${pathname.startsWith('/pecas') ? 'text-rose-600' : 'text-gray-600 hover:text-rose-600'}`}>
+            Peças
+          </Link>
         </div>
         <div className="flex items-center gap-3">
           <span className="text-sm text-muted-foreground hidden sm:block">{userEmail}</span>
